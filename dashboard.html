@@ -39,29 +39,31 @@
             animation: crt-flicker 0.15s infinite;
         }
 
-        /* --- CSS VARIABLES --- */
+        
+        /* --- CSS VARIABLES (INFINITY SMS EXACT MATCH) --- */
         :root {
             /* Colors */
-            --bg-color: #050505;
-            --surface-color: #0a0a0a;
-            --card-color: #111111;
-            --border-color: #332d1a;
+            --bg-color: hsl(240, 20%, 4%);
+            --surface-color: hsl(240, 15%, 6%);
+            --card-color: hsl(240, 15%, 8%);
+            --border-color: hsl(50, 60%, 20%);
             
             /* Accents */
-            --accent-primary: #ffcc00;
-            --accent-secondary: #00ffff;
-            --accent-success: #00ff66;
-            --accent-danger: #ff3333;
-            --accent-warning: #ffaa00;
+            --accent-primary: hsl(50, 100%, 50%); /* Neon Yellow/Gold */
+            --accent-secondary: hsl(180, 100%, 50%); /* Neon Cyan */
+            --accent-success: hsl(120, 100%, 50%); /* Neon Green */
+            --accent-danger: hsl(0, 100%, 55%); /* Neon Red */
+            --accent-warning: hsl(45, 100%, 45%);
             
             /* Typography Colors */
-            --text-main: #f5f5dc;
-            --text-muted: #888877;
+            --text-main: hsl(50, 100%, 95%);
+            --text-muted: hsl(50, 30%, 55%);
             
             /* Glows & Shadows */
-            --glow-primary: 0 0 20px rgba(255, 204, 0, 0.25);
-            --glow-secondary: 0 0 20px rgba(0, 255, 255, 0.25);
+            --glow-primary: 0 0 20px hsla(50, 100%, 50%, 0.25);
+            --glow-secondary: 0 0 20px hsla(180, 100%, 50%, 0.25);
             --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.8);
+
 
             
             /* Layout Defaults */
@@ -1319,7 +1321,7 @@
             
             <div class="input-wrapper">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" id="pass-input" placeholder="Enter secure password..." onkeydown="if(event.key==='Enter') AuthManager.login()">
+                <input type="password" id="pass-input" placeholder="Password (try: admin or admin123)" onkeydown="if(event.key==='Enter') AuthManager.login()">
             </div>
             
             <button class="btn-login" onclick="AuthManager.login()">
@@ -1749,6 +1751,120 @@
 
         
         
+        
+        <!-- BUY NUMBER PAGE -->
+        <div class="page" id="page-buy">
+            <div style="margin-bottom:25px;">
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px; line-height:1;">RENT VIRTUAL NUMBER</h2>
+                <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Select a service and country to instantly provision a temporary number.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Service Selection -->
+                <div class="table-card" style="padding: 20px;">
+                    <h3 style="color: var(--text-main); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;"><i class="fa-solid fa-layer-group"></i> 1. Select Service</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <i class="fa-brands fa-whatsapp" style="font-size: 24px; color: #25D366;"></i>
+                                <span style="font-size: 18px; font-weight: 600;">WhatsApp</span>
+                            </div>
+                            <span class="badge primary">$0.85</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <i class="fa-brands fa-telegram" style="font-size: 24px; color: #0088cc;"></i>
+                                <span style="font-size: 18px; font-weight: 600;">Telegram</span>
+                            </div>
+                            <span class="badge primary">$0.60</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <i class="fa-brands fa-google" style="font-size: 24px; color: #FF0000;"></i>
+                                <span style="font-size: 18px; font-weight: 600;">Google / Gmail</span>
+                            </div>
+                            <span class="badge primary">$0.45</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <i class="fa-brands fa-instagram" style="font-size: 24px; color: #E1306C;"></i>
+                                <span style="font-size: 18px; font-weight: 600;">Instagram</span>
+                            </div>
+                            <span class="badge primary">$0.35</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Country Selection -->
+                <div class="table-card" style="padding: 20px;">
+                    <h3 style="color: var(--text-main); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;"><i class="fa-solid fa-earth-americas"></i> 2. Select Country</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
+                            <span style="font-size: 16px;">🇺🇸 United States</span>
+                            <span class="badge green">High Stock</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 16px;">🇬🇧 United Kingdom</span>
+                            <span class="badge green">High Stock</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 16px;">🇮🇳 India</span>
+                            <span class="badge yellow">Medium Stock</span>
+                        </div>
+                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 16px;">🇷🇺 Russia</span>
+                            <span class="badge red">Low Stock</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-card" style="margin-top: 20px; padding: 20px; text-align: center; background: rgba(0, 255, 102, 0.05); border: 1px dashed var(--accent-success);">
+                <div style="font-size: 24px; color: var(--text-main); margin-bottom: 15px;">TOTAL: <span style="color: var(--accent-success); font-family: 'Orbitron', sans-serif;">$0.85</span></div>
+                <button class="btn-primary" style="font-size: 18px; padding: 15px 40px; background: var(--accent-success); color: #000;" onclick="NotificationManager.success('Number provisioned successfully! Check MY RENTALS tab.')"><i class="fa-solid fa-bolt"></i> PROVISION NUMBER NOW</button>
+            </div>
+        </div>
+
+        <!-- MY RENTALS PAGE -->
+        <div class="page" id="page-myotps">
+            <div style="margin-bottom:25px;">
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">MY ACTIVE RENTALS</h2>
+                <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Awaiting SMS codes... Numbers automatically expire after 15 minutes.</p>
+            </div>
+            
+            <div class="table-card" style="padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--accent-primary);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp (🇺🇸 USA)</div>
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 32px; color: var(--accent-primary); letter-spacing: 2px;">+1 (555) 019-8372</div>
+                        <div style="margin-top: 10px; color: var(--text-main); font-size: 18px;">
+                            STATUS: <span class="blink" style="color: var(--accent-secondary);">WAITING FOR SMS...</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 48px; color: var(--text-muted);">14:59</div>
+                        <button class="btn-danger" style="margin-top: 10px;" onclick="NotificationManager.show('Rental cancelled. Funds refunded.', 'info')"><i class="fa-solid fa-xmark"></i> CANCEL</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="table-card" style="padding: 20px; border-left: 4px solid var(--accent-success); opacity: 0.7;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i> Telegram (🇬🇧 UK)</div>
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--text-muted); letter-spacing: 2px;">+44 7700 900077</div>
+                        <div style="margin-top: 10px; color: var(--accent-success); font-size: 24px; font-family: 'Orbitron', sans-serif;">
+                            CODE: <span style="background: rgba(0, 255, 102, 0.1); padding: 5px 15px; border-radius: 5px; border: 1px dashed var(--accent-success);">88291</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--accent-success);">COMPLETED</div>
+                        <button class="btn-outline" style="margin-top: 10px;"><i class="fa-solid fa-copy"></i> COPY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- API DOCS PAGE -->
         <div class="page" id="page-api">
             <div style="margin-bottom:25px;">
@@ -2121,7 +2237,7 @@
                 document.getElementById('app').style.display = 'block';
                 
                 let path = window.location.pathname.replace('/', '') || 'dashboard';
-                const validPages = ['dashboard', 'otp', 'numbers', 'search', 'api', 'panels', 'users', 'groups', 'forcejoin', 'settings', 'logs', 'ban', 'broadcast', 'sysinfo'];
+                const validPages = ['dashboard', 'otp', 'numbers', 'search', 'api', 'panels', 'users', 'groups', 'forcejoin', 'settings', 'logs', 'ban', 'broadcast', 'sysinfo', 'buy', 'myotps'];
                 if (!validPages.includes(path)) path = 'dashboard';
                 
                 this.showPage(path, false);
@@ -2161,7 +2277,7 @@
                     'dashboard': 'fa-chart-pie', 'otp': 'fa-bolt', 'numbers': 'fa-sim-card',
                     'panels': 'fa-server', 'users': 'fa-users', 'groups': 'fa-comments',
                     'forcejoin': 'fa-shield-halved', 'settings': 'fa-sliders', 'logs': 'fa-terminal',
-                    'ban': 'fa-ban', 'broadcast': 'fa-satellite-dish', 'search': 'fa-magnifying-glass', 'sysinfo': 'fa-microchip', 'api': 'fa-code', 'services': 'fa-layer-group', 'wallet': 'fa-wallet'
+                    'ban': 'fa-ban', 'broadcast': 'fa-satellite-dish', 'search': 'fa-magnifying-glass', 'sysinfo': 'fa-microchip', 'api': 'fa-code', 'buy': 'fa-cart-shopping', 'myotps': 'fa-clock-rotate-left'
                 };
                 document.getElementById('page-icon').className = `fa-solid ${iconMap[pageName]}`;
                 
