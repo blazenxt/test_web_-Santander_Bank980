@@ -309,13 +309,15 @@ def otp_store():
         if isinstance(entry, dict):
             otp = entry.get("otp", "")
             ts  = entry.get("ts", 0)
+            svc = entry.get("service", "Unknown")
             age = int(now - ts)
             expires_in = max(0, 300 - age)
         else:
             otp = entry
+            svc = "Unknown"
             ts  = 0
             expires_in = 0
-        result.append({"number": number, "otp": otp, "expires_in": expires_in})
+        result.append({"number": number, "otp": otp, "service": svc, "expires_in": expires_in})
     return jsonify(result)
 
 @app.route("/api/otp/store", methods=["DELETE"])

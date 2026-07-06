@@ -1280,7 +1280,7 @@ async def ivas_worker(name: str):
                                 log_otp_memory(number, service, otp, f"IVAS:{name}")
                                 if otp and number:
                                     store = load_otp_store()
-                                    store[number] = otp
+                                    store[number] = {"otp": otp, "ts": time.time(), "service": service}
                                     save_otp_store(store)
                                 formatted = format_otp_message(number, service, otp or "N/A",
                                     source_label=f"IVAS:{name}", sms_text=text)
@@ -1327,7 +1327,7 @@ async def api_worker(panel: str):
                 log_otp_memory(data["number"], data["service"], otp, f"REST:{panel}")
                 if otp and data["number"]:
                     store = load_otp_store()
-                    store[data["number"]] = otp
+                    store[data["number"]] = {"otp": otp, "ts": time.time(), "service": data.get("service", "Unknown")}
                     save_otp_store(store)
                 formatted = format_otp_message(
                     data["number"], data["service"], otp or "N/A",
