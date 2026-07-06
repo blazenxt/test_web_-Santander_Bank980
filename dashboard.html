@@ -1469,6 +1469,16 @@
                         <canvas id="otp-chart"></canvas>
                     </div>
                 </div>
+                <div class="table-card" style="margin-top:30px; background: #050505; border: 1px solid var(--border-color);">
+                    <div class="table-header" style="border-bottom: 1px dashed var(--border-color);">
+                        <div class="section-title" style="margin:0; font-family: 'Share Tech Mono', monospace; color: var(--accent-secondary);"><i class="fa-solid fa-terminal"></i> SYSTEM.LOG_STREAM</div>
+                        <span class="blink" style="color: var(--accent-success);">LIVE_SECURE_LINK_ESTABLISHED</span>
+                    </div>
+                    <div id="mini-terminal" style="padding: 15px; font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--accent-primary); max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px;">
+                        <!-- Terminal lines will be injected here -->
+                    </div>
+                </div>
+
             </div>
 
             
@@ -1714,6 +1724,148 @@
             </div>
 
         
+        
+        <!-- SERVICES PAGE -->
+        <div class="page" id="page-services">
+            <div style="margin-bottom:25px;">
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">SERVICES & PRICING</h2>
+                <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Real-time availability and cost per SMS activation.</p>
+            </div>
+            
+            <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="card" style="border-top: 3px solid #25D366;">
+                    <i class="fa-brands fa-whatsapp card-icon" style="color: #25D366; font-size: 32px;"></i>
+                    <div class="card-label">WhatsApp</div>
+                    <div class="card-value" style="font-size: 28px; color: var(--text-main);">$0.85</div>
+                    <div class="card-sub" style="color: var(--accent-success);">Stock: High</div>
+                </div>
+                <div class="card" style="border-top: 3px solid #0088cc;">
+                    <i class="fa-brands fa-telegram card-icon" style="color: #0088cc; font-size: 32px;"></i>
+                    <div class="card-label">Telegram</div>
+                    <div class="card-value" style="font-size: 28px; color: var(--text-main);">$0.60</div>
+                    <div class="card-sub" style="color: var(--accent-success);">Stock: High</div>
+                </div>
+                <div class="card" style="border-top: 3px solid #E1306C;">
+                    <i class="fa-brands fa-instagram card-icon" style="color: #E1306C; font-size: 32px;"></i>
+                    <div class="card-label">Instagram</div>
+                    <div class="card-value" style="font-size: 28px; color: var(--text-main);">$0.45</div>
+                    <div class="card-sub" style="color: var(--accent-warning);">Stock: Medium</div>
+                </div>
+                <div class="card" style="border-top: 3px solid #FF0000;">
+                    <i class="fa-brands fa-google card-icon" style="color: #FF0000; font-size: 32px;"></i>
+                    <div class="card-label">Google / Gmail</div>
+                    <div class="card-value" style="font-size: 28px; color: var(--text-main);">$1.20</div>
+                    <div class="card-sub" style="color: var(--accent-danger);">Stock: Low</div>
+                </div>
+            </div>
+            
+            <div class="table-card" style="margin-top: 30px;">
+                <div class="table-header">
+                    <div class="section-title" style="margin:0;"><i class="fa-solid fa-globe"></i> Global Pricing Table</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SERVICE</th>
+                            <th>COUNTRY</th>
+                            <th>SUCCESS RATE</th>
+                            <th>PRICE (USD)</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WhatsApp</td>
+                            <td><span class="badge primary">United States</span></td>
+                            <td><span class="badge green">98%</span></td>
+                            <td>$0.85</td>
+                            <td><button class="btn-outline" style="padding: 5px 10px; font-size: 12px;"><i class="fa-solid fa-cart-shopping"></i> BUY</button></td>
+                        </tr>
+                        <tr>
+                            <td>Telegram</td>
+                            <td><span class="badge primary">United Kingdom</span></td>
+                            <td><span class="badge green">95%</span></td>
+                            <td>$0.70</td>
+                            <td><button class="btn-outline" style="padding: 5px 10px; font-size: 12px;"><i class="fa-solid fa-cart-shopping"></i> BUY</button></td>
+                        </tr>
+                        <tr>
+                            <td>Google</td>
+                            <td><span class="badge primary">India</span></td>
+                            <td><span class="badge yellow">82%</span></td>
+                            <td>$0.35</td>
+                            <td><button class="btn-outline" style="padding: 5px 10px; font-size: 12px;"><i class="fa-solid fa-cart-shopping"></i> BUY</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- WALLET PAGE -->
+        <div class="page" id="page-wallet">
+            <div style="margin-bottom:25px;">
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-success); letter-spacing:2px; line-height:1;">WALLET & BILLING</h2>
+                <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Manage crypto deposits and transaction history.</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card" style="background: linear-gradient(135deg, rgba(0, 255, 102, 0.1), rgba(0, 0, 0, 0)); border: 1px solid rgba(0, 255, 102, 0.3);">
+                    <div class="card-label" style="color: var(--accent-success);">AVAILABLE BALANCE</div>
+                    <div class="card-value" style="font-size: 48px; color: var(--text-main);">$1,337.00</div>
+                    <button class="btn-primary" style="margin-top: 15px; width: 100%; background: var(--accent-success); color: #000;"><i class="fa-brands fa-bitcoin"></i> DEPOSIT CRYPTO</button>
+                </div>
+                <div class="card">
+                    <div class="card-label">LIFETIME SPENT</div>
+                    <div class="card-value" style="font-size: 36px; color: var(--text-muted);">$4,250.50</div>
+                    <div class="card-sub">Since Jan 2026</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">ACTIVE RENTALS</div>
+                    <div class="card-value" style="font-size: 36px;">3</div>
+                    <div class="card-sub" style="color: var(--accent-warning);">Renewing in 4 days</div>
+                </div>
+            </div>
+            
+            <div class="table-card" style="margin-top: 30px;">
+                <div class="table-header">
+                    <div class="section-title" style="margin:0;"><i class="fa-solid fa-receipt"></i> Recent Transactions</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TXID</th>
+                            <th>TYPE</th>
+                            <th>AMOUNT</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code style="color: var(--accent-primary);">TX-99384A</code></td>
+                            <td>Crypto Deposit (BTC)</td>
+                            <td><span style="color: var(--accent-success);">+$500.00</span></td>
+                            <td style="color: var(--text-muted);">2026-07-06 14:30</td>
+                            <td><span class="badge green">COMPLETED</span></td>
+                        </tr>
+                        <tr>
+                            <td><code style="color: var(--accent-primary);">TX-88271B</code></td>
+                            <td>Number Purchase (Telegram)</td>
+                            <td><span style="color: var(--accent-danger);">-$0.60</span></td>
+                            <td style="color: var(--text-muted);">2026-07-05 09:12</td>
+                            <td><span class="badge green">COMPLETED</span></td>
+                        </tr>
+                        <tr>
+                            <td><code style="color: var(--accent-primary);">TX-77162C</code></td>
+                            <td>API Usage Billing</td>
+                            <td><span style="color: var(--accent-danger);">-$12.40</span></td>
+                            <td style="color: var(--text-muted);">2026-07-01 00:00</td>
+                            <td><span class="badge green">COMPLETED</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <!-- API DOCS PAGE -->
         <div class="page" id="page-api">
             <div style="margin-bottom:25px;">
@@ -2083,7 +2235,7 @@
                     'dashboard': 'fa-chart-pie', 'otp': 'fa-bolt', 'numbers': 'fa-sim-card',
                     'panels': 'fa-server', 'users': 'fa-users', 'groups': 'fa-comments',
                     'forcejoin': 'fa-shield-halved', 'settings': 'fa-sliders', 'logs': 'fa-terminal',
-                    'ban': 'fa-ban', 'broadcast': 'fa-satellite-dish', 'search': 'fa-magnifying-glass', 'sysinfo': 'fa-microchip', 'api': 'fa-code'
+                    'ban': 'fa-ban', 'broadcast': 'fa-satellite-dish', 'search': 'fa-magnifying-glass', 'sysinfo': 'fa-microchip', 'api': 'fa-code', 'services': 'fa-layer-group', 'wallet': 'fa-wallet'
                 };
                 document.getElementById('page-icon').className = `fa-solid ${iconMap[pageName]}`;
                 
@@ -2109,7 +2261,7 @@
                 STATE.timerId = setInterval(() => {
                     // Silent background updates
                     if (STATE.currentPage === 'otp') DataManager.loadOTPFeed();
-                    if (STATE.currentPage === 'dashboard') DataManager.loadStats();
+                    if (STATE.currentPage === 'dashboard') { DataManager.loadStats(); DataManager.updateMiniTerminal(); }
                     
                     // Increment uptime ticker locally to avoid heavy API spam
                     const upDisplay = document.getElementById('uptime-display');
