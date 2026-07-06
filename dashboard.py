@@ -15,7 +15,7 @@ load_dotenv()
 BOT_TOKEN       = os.getenv("BOT_TOKEN", "")
 DASHBOARD_PASS  = os.getenv("DASHBOARD_PASS", "admin")
 DASHBOARD_SECRET= os.getenv("DASHBOARD_SECRET", "changeme_secret_32chars_minimum!")
-DASHBOARD_PORT  = int(os.getenv("DASHBOARD_PORT", "8080"))
+DASHBOARD_PORT  = int(os.getenv("PORT", os.getenv("DASHBOARD_PORT", "8080")))
 BASE_DIR        = os.path.dirname(os.path.abspath(__file__))
 
 OTP_FILE        = os.path.join(BASE_DIR, "otp_store.json")
@@ -564,9 +564,12 @@ def otp_chart():
         db.close()
 
 # ── SERVE DASHBOARD HTML ──────────────────────────────────────
-@app.route("/")
-@app.route("/dashboard")
-def serve_dashboard():
+@app.route("/", defaults={'path': ''})
+@app.route("/<path:path>")
+def serve_dashboard(path):
+    # Only serve HTML for non-API routes
+    if path.startswith("api/"):
+        return jsonify({"error": "Not found"}), 404
     return send_from_directory(BASE_DIR, "dashboard.html")
 
 if __name__ == "__main__":

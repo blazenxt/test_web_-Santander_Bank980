@@ -6,3 +6,4 @@ python-telegram-bot>=21.8
 Flask==3.0.3
 Flask-Cors==4.0.1
 psutil==5.9.8
+gunicorn==21.2.0
