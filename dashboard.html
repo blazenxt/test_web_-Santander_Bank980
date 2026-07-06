@@ -2139,7 +2139,7 @@
          * Authentication Controller
          */
         class AuthManager {
-            static init() {
+                        static init() {
                 STATE.token = localStorage.getItem('nxt_token') || '';
                 
                 // Telegram WebApp Integration
@@ -2155,7 +2155,8 @@
                 }
 
                 if (STATE.token) {
-                    this.validateSession();
+                    Navigation.launchApp(); // Show UI immediately 
+                    this.validateSession(); // Validate in background
                 } else {
                     Navigation.launchApp();
                 }
