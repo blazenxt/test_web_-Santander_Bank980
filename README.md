@@ -25,7 +25,7 @@ OWNER_IDS=8708907310,8726642457,5618954306,6059791675
 
 ### 1. `app.py`
 - **Dictionary vs List Typo (Fixed):**
-  `DEFAULT_PANELS` was initially instantiated as an empty list `[]`. The actual dictionary declaration `{ "NEXA PANEL": {...} }` was mistakenly disabled by being wrapped in a multi-line comment `"""`. This resulted in an `AttributeError` when `API_PANELS.keys()` was queried downstream. *Fix applied directly to the file.*
+  `DEFAULT_PANELS` was initially instantiated as an empty list `[]`. The actual dictionary declaration `{ "BLAZENXT PANEL": {...} }` was mistakenly disabled by being wrapped in a multi-line comment `"""`. This resulted in an `AttributeError` when `API_PANELS.keys()` was queried downstream. *Fix applied directly to the file.*
 - **Event Loop Blocking Issue (Fixed):**
   The async bot handler `fetchsms_command` called `fetch_all_panels(limit=5)` directly. `fetch_all_panels` uses synchronous I/O operations (`requests.get()`) without timing out asynchronously. This effectively halts the `asyncio` event loop, making the bot unresponsive to other users until all panels fetch operations are completed. *Fixed by wrapping it in `asyncio.get_running_loop().run_in_executor()`.*
 

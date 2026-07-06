@@ -38,11 +38,11 @@ OWNER_IDS      = [8708907310,8726642457,5618954306,6059791675
 ADMIN_IDS      = [8708907310,8726642457,5618954306,6059791675
 ]
 OTP_GROUP_LINK = "https://t.me/+DfUnv_qgZEFkZWU8"
-BOT_NAME       = "Nexa OTP Bot"
+BOT_NAME       = "BlazeNXT OTP Bot"
 DEV_CONTACT    = "@firstoget"	
 REQUIRED_CHANNELS = []
 DEFAULT_PANELS = {
-    "NEXA PANEL": {
+    "BLAZENXT PANEL": {
         "url":      "http://147.135.212.197/crapi/time/viewstats",
         "token":    "RVNWNEVBiGJeZodidIuGaXODkXiFlY9dYXNoRn1OZ2t6Z3lha1Y=",
         "records":  20,
@@ -469,7 +469,7 @@ def update_staff_perms(uid: int, perms: list):
 def load_config():
     return load_json(CONFIG_FILE, {
         "channel_link":    OTP_GROUP_LINK,
-        "number_bot_link": "http://t.me/NexaOTPBot",
+        "number_bot_link": "http://t.me/BlazeNXTBot",
         "otp_forward":     True,
         "forward_delay":   0,
         "log_group":       None,
@@ -625,15 +625,15 @@ def detect_language_from_text(text: str) -> str:
 
 def format_number_pkotp(number: str) -> str:
     """
-    Format full number as: 4915511-NEXAOTP-03543
-    First 7 digits + -NEXAOTP- + last 5 digits
+    Format full number as: 4915511-BLAZENXT-03543
+    First 7 digits + -BLAZENXT- + last 5 digits
     """
     digits = re.sub(r"[^0-9]", "", number)
     if len(digits) >= 12:
-        return f"{digits[:7]}-NEXAOTP-{digits[-5:]}"
+        return f"{digits[:7]}-BLAZENXT-{digits[-5:]}"
     elif len(digits) >= 7:
         mid = len(digits) - 5
-        return f"{digits[:mid]}-NEXAOTP-{digits[-5:]}"
+        return f"{digits[:mid]}-BLAZENXT-{digits[-5:]}"
     return digits
 
 def format_otp_message(number: str, service: str, otp: str,
@@ -641,7 +641,7 @@ def format_otp_message(number: str, service: str, otp: str,
     """
     Format OTP message with CUSTOM EMOJIS ONLY - no old flag emojis
     Layout: [CountryEmoji] ┃ [ServiceEmoji] #REGION #SVC
-            [number in NEXAOTP format]
+            [number in BLAZENXT format]
             #Language
     """
     region    = get_region_code(number)
@@ -651,7 +651,7 @@ def format_otp_message(number: str, service: str, otp: str,
     country_custom_emoji = get_custom_country_emoji(region)
     app_custom_emoji     = get_app_emoji(service)
 
-    # Number formatted as: 9230267 NEXAOTP 55035
+    # Number formatted as: 9230267 BLAZENXT 55035
     pkotp_number = format_number_pkotp(number)
 
     # Detect language from full SMS text first, fallback to region map
@@ -661,7 +661,7 @@ def format_otp_message(number: str, service: str, otp: str,
 
     # Layout:
     # [CountryEmoji] ┃ [ServiceEmoji]  #WS
-    # `9230267 NEXAOTP 55035`
+    # `9230267 BLAZENXT 55035`
     # #Urdu
     gh_tag = "  <b>#GH</b>" if "gochat" in service.lower() else ""
     return f"{country_custom_emoji} ┃ {app_custom_emoji}  <b>#{region}</b>  <b>{pkotp_number}</b>  <b>#{lang}</b>{gh_tag}"
@@ -689,7 +689,7 @@ def get_otp_keyboard(number: str, otp: str) -> InlineKeyboardMarkup:
         [
             InlineKeyboardButton(
                 " Numbers",
-                url="https://t.me/nexa_numbers",
+                url="https://t.me/blazenxt_numbers",
                 api_kwargs={
                     "style": "danger",
                     "icon_custom_emoji_id": PHONE_EMOJI
@@ -825,7 +825,7 @@ async def send_otp_to_owner(number: str, service: str, otp: str,
         [
             InlineKeyboardButton(
                 " Numbers",
-                url="https://t.me/nexa_numbers",
+                url="https://t.me/blazenxt_numbers",
                 api_kwargs={
                     "style": "danger",
                     "icon_custom_emoji_id": "5334956902598927432"
@@ -1398,9 +1398,9 @@ def get_main_menu_keyboard():
 
 def get_join_keyboard():
     return InlineKeyboardMarkup([
-        [bc("📞 Nexa Numbers",    url="https://t.me/nexa_numbers",      style="danger")],
+        [bc("📞 BlazeNXT Numbers",    url="https://t.me/blazenxt_numbers",      style="danger")],
         [bc("💬 WhatsApp Group",  url="https://chat.whatsapp.com/HVqCQ6wX0sz9sqox5QEgrg?mode=hqctcla",  style="primary")],
-        [bc("📲 Nexa OTP",        url="https://t.me/+DfUnv_qgZEFkZWU8",      style="success")],
+        [bc("📲 BlazeNXT OTP",        url="https://t.me/+DfUnv_qgZEFkZWU8",      style="success")],
         [bc("✅ I Joined — Check", cb="check_join",                    style="success")],
     ])
 
@@ -1656,7 +1656,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = (
         f"👋 <b>HI {first}</b>\n"
         f"━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"💎 <b>NEXAOTP BOT</b>\n"
+        f"💎 <b>BLAZENXT BOT</b>\n"
         f"⚡ Fastest OTP Service\n"
         f"🤖 Auto-Assign System\n"
         f"🧬 Multi-Panel + IVAS Support\n\n"
@@ -1968,7 +1968,7 @@ async def callback_query_handler(update: Update, context: ContextTypes.DEFAULT_T
         msg = (
             f"👋 <b>HI {first}</b>\n"
             f"━━━━━━━━━━━━━━━━━━━━━━\n\n"
-            f"💎 <b>NEXAOTP BOT</b>\n"
+            f"💎 <b>BLAZENXT BOT</b>\n"
             f"⚡ Fastest OTP Service\n"
             f"🤖 Auto-Assign System\n"
             f"🧬 Multi-Panel + IVAS Support\n\n"
@@ -1990,7 +1990,7 @@ async def callback_query_handler(update: Update, context: ContextTypes.DEFAULT_T
             msg = (
                 f"👋 <b>HI {first}</b>\n"
                 f"━━━━━━━━━━━━━━━━━━━━━━\n\n"
-                f"💎 <b>NEXAOTP BOT</b>\n"
+                f"💎 <b>BLAZENXT BOT</b>\n"
                 f"⚡ Fastest OTP Service\n"
                 f"🤖 Auto-Assign System\n"
                 f"🧬 Multi-Panel + IVAS Support\n\n"
@@ -2045,7 +2045,7 @@ async def callback_query_handler(update: Update, context: ContextTypes.DEFAULT_T
                 reply_markup=InlineKeyboardMarkup([
                     [b("🔄 Get 3 More Numbers", f"nb_get|{country}"),
                      b("🌍 Change Country",      "show_countries")],
-                    [b("📢 Nexa OTP Group", url="https://t.me/+DfUnv_qgZEFkZWU8")],
+                    [b("📢 BlazeNXT OTP Group", url="https://t.me/+DfUnv_qgZEFkZWU8")],
                     [b("🔙 Back",               "back_to_main")],
                 ]))
         else:
