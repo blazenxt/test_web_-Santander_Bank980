@@ -1273,20 +1273,29 @@
         }
 
         
-        @media (max-width: 768px) {
+                @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
             }
             .sidebar.open { transform: translateX(0); }
             .topbar { left: 0; padding: 0 15px; }
-            .main { margin-left: 0; padding-left: 15px; padding-right: 15px; }
+            .main { margin-left: 0; padding-left: 10px; padding-right: 10px; }
             .mobile-menu-btn { display: flex; }
+            .sidebar { z-index: 1000; }
+            #mobile-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 999; }
+            #mobile-backdrop.open { display: block; }
             .cards-grid { grid-template-columns: 1fr; }
             .page-title { font-size: 20px; }
             .user-badge span:last-child { display: none; } /* hide name on mobile */
             .setting-row { flex-direction: column; align-items: flex-start; }
             .setting-input { max-width: 100%; }
             #page-buy > div:nth-child(2) { grid-template-columns: 1fr !important; }
+            .table-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .table-actions { width: 100%; display: flex; justify-content: space-between; }
+            .login-box { padding: 30px 20px; margin: 15px; }
+            #conn-status { display: none; } /* hide connection status badge on mobile topbar to save space */
+            .feed-otp { font-size: 18px !important; padding: 5px 10px !important; }
+        }
         }
 
     
@@ -2406,15 +2415,18 @@
                 this.currentCountry = { name, prefix };
             }
 
-            static provisionNumber() {
+            static async provisionNumber() {
                 const btn = document.getElementById('btn-provision-now');
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PROVISIONING...';
                 btn.disabled = true;
 
-                setTimeout(() => {
-                    const randSuffix = Math.floor(1000000 + Math.random() * 9000000);
-                    const newNumber = `${this.currentCountry.prefix} ${randSuffix.toString().substring(0,3)} ${randSuffix.toString().substring(3)}`;
+                try {
+                    const res = await APIService.request('/api/provision', {
+                        method: 'POST',
+                        body: JSON.stringify({ prefix: this.currentCountry.prefix, service: this.currentService.name })
+                    });
                     
+                    const newNumber = res.number;
                     const newRental = {
                         id: Date.now(),
                         service: this.currentService,
@@ -2432,7 +2444,11 @@
                     
                     NotificationManager.success(`Successfully assigned ${newNumber}`);
                     Navigation.showPage('myotps');
-                }, 800);
+                } catch(e) {
+                    btn.innerHTML = '<i class="fa-solid fa-bolt"></i> PROVISION NUMBER NOW';
+                    btn.disabled = false;
+                    NotificationManager.show('Provisioning failed. No stock available.', 'error');
+                }
             }
 
             static cancelRental(id) {

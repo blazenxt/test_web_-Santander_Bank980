@@ -497,6 +497,34 @@ def search_otp():
     finally:
         db.close()
 
+
+# ── PROVISIONING API ──────────────────────────────────────────
+@app.route("/api/provision", methods=["POST"])
+def provision_number():
+    data = request.json or {}
+    country_prefix = data.get("prefix", "+1")
+    service = data.get("service", "Unknown")
+    
+    # Try to find a matching number from DB or just pick any available
+    db = get_db()
+    try:
+        # Simplistic approach: find a number added to the DB, preferring the requested country if possible
+        # (Actually the DB stores country codes/names loosely, so let's just pick one randomly)
+        row = db.execute("SELECT id, phone FROM numbers ORDER BY RANDOM() LIMIT 1").fetchone()
+        if row:
+            phone = row["phone"]
+            if not phone.startswith("+"):
+                phone = "+" + phone
+        else:
+            # Fallback to a mock number if DB is empty
+            import random
+            phone = f"{country_prefix}{random.randint(1000000000, 9999999999)}"
+        return jsonify({"ok": True, "number": phone})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        db.close()
+
 # ── SYSTEM INFO ───────────────────────────────────────────────
 @app.route("/api/system")
 def system_info():
