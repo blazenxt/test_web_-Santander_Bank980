@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BLAZE NXT — Enterprise OTP Dashboard</title>
+    <title>INFINITY SMS — Enterprise OTP Dashboard</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <style>
+        
         /* --- CSS VARIABLES --- */
         :root {
             /* Colors */
-            --bg-color: #05070f;
-            --surface-color: #0b0f1e;
-            --card-color: #0f1428;
-            --border-color: #1e2a4a;
+            --bg-color: #050505;
+            --surface-color: #0a0a0a;
+            --card-color: #111111;
+            --border-color: #332d1a;
             
             /* Accents */
-            --accent-primary: #00d4ff;
-            --accent-secondary: #7b2fff;
-            --accent-success: #00ff88;
-            --accent-danger: #ff3366;
-            --accent-warning: #ffcc00;
+            --accent-primary: #ffcc00;
+            --accent-secondary: #00ffff;
+            --accent-success: #00ff66;
+            --accent-danger: #ff3333;
+            --accent-warning: #ffaa00;
             
             /* Typography Colors */
-            --text-main: #e0e8ff;
-            --text-muted: #4a5880;
+            --text-main: #f5f5dc;
+            --text-muted: #888877;
             
             /* Glows & Shadows */
-            --glow-primary: 0 0 20px rgba(0, 212, 255, 0.25);
-            --glow-secondary: 0 0 20px rgba(123, 47, 255, 0.25);
-            --glow-danger: 0 0 20px rgba(255, 51, 102, 0.25);
-            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --glow-primary: 0 0 20px rgba(255, 204, 0, 0.25);
+            --glow-secondary: 0 0 20px rgba(0, 255, 255, 0.25);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.8);
+
             
             /* Layout Defaults */
             --border-radius-sm: 6px;
@@ -80,8 +81,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(255, 204, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 204, 0, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: -2;
@@ -94,7 +95,7 @@
             left: -10%;
             width: 50%;
             height: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.08) 0%, transparent 70%);
             pointer-events: none;
             z-index: -1;
             filter: blur(80px);
@@ -143,12 +144,12 @@
         }
 
         .login-logo {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 48px;
             letter-spacing: 5px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            /* -webkit-text-fill-color: transparent */ color: var(--accent-primary);
             text-align: center;
             margin-bottom: 5px;
         }
@@ -185,7 +186,7 @@
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
             color: var(--text-main);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 15px;
             outline: none;
             transition: var(--transition-fast);
@@ -193,8 +194,8 @@
 
         .login-box input:focus {
             border-color: var(--accent-primary);
-            background-color: rgba(0, 212, 255, 0.05);
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            background-color: rgba(255, 204, 0, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
         }
 
         .login-box input:focus + i {
@@ -204,7 +205,7 @@
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             border: none;
             border-radius: var(--border-radius-sm);
             color: #ffffff;
@@ -220,7 +221,7 @@
         .btn-login:hover {
             opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.3);
         }
 
         .login-err {
@@ -255,7 +256,7 @@
         .tg-login-btn:hover {
             border-color: var(--accent-primary);
             color: var(--accent-primary);
-            background-color: rgba(0, 212, 255, 0.05);
+            background-color: rgba(255, 204, 0, 0.05);
         }
 
         /* ========================================== */
@@ -269,6 +270,7 @@
         }
 
         /* --- SIDEBAR --- */
+        
         .sidebar {
             position: fixed;
             left: 0;
@@ -281,8 +283,9 @@
             flex-direction: column;
             z-index: 100;
             transition: transform var(--transition-normal);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
         }
+
 
         .sidebar-logo {
             padding: 30px 20px 20px;
@@ -291,12 +294,12 @@
         }
 
         .logo-text {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 32px;
             letter-spacing: 4px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            /* -webkit-text-fill-color: transparent */ color: var(--accent-primary);
         }
 
         .logo-sub {
@@ -340,14 +343,14 @@
 
         .nav-item:hover {
             color: var(--text-main);
-            background-color: rgba(0, 212, 255, 0.05);
-            border-left-color: rgba(0, 212, 255, 0.3);
+            background-color: rgba(255, 204, 0, 0.05);
+            border-left-color: rgba(255, 204, 0, 0.3);
         }
 
         .nav-item.active {
             color: var(--accent-primary);
             border-left-color: var(--accent-primary);
-            background-color: rgba(0, 212, 255, 0.1);
+            background-color: rgba(255, 204, 0, 0.1);
         }
 
         .nav-item i {
@@ -393,7 +396,7 @@
         }
 
         .page-title {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             letter-spacing: 3px;
             color: var(--text-main);
@@ -445,7 +448,7 @@
         .btn-outline:hover {
             border-color: var(--accent-primary);
             color: var(--accent-primary);
-            background-color: rgba(0, 212, 255, 0.05);
+            background-color: rgba(255, 204, 0, 0.05);
         }
         
         .btn-outline.danger:hover {
@@ -540,7 +543,7 @@
         }
 
         .card-value {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 46px;
             letter-spacing: 2px;
             line-height: 1;
@@ -641,7 +644,7 @@
             padding: 15px 25px;
             border-bottom: 1px solid rgba(30, 42, 74, 0.4);
             font-size: 14px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             vertical-align: middle;
         }
 
@@ -650,7 +653,7 @@
         }
 
         tr:hover td {
-            background-color: rgba(0, 212, 255, 0.03);
+            background-color: rgba(255, 204, 0, 0.03);
         }
 
         /* --- PAGINATION --- */
@@ -709,8 +712,8 @@
 
         .badge.green { background-color: rgba(0, 255, 136, 0.1); color: var(--accent-success); border: 1px solid rgba(0, 255, 136, 0.3); }
         .badge.red { background-color: rgba(255, 51, 102, 0.1); color: var(--accent-danger); border: 1px solid rgba(255, 51, 102, 0.3); }
-        .badge.cyan { background-color: rgba(0, 212, 255, 0.1); color: var(--accent-primary); border: 1px solid rgba(0, 212, 255, 0.3); }
-        .badge.purple { background-color: rgba(123, 47, 255, 0.1); color: var(--accent-secondary); border: 1px solid rgba(123, 47, 255, 0.3); }
+        .badge.primary { background-color: rgba(255, 204, 0, 0.1); color: var(--accent-primary); border: 1px solid rgba(255, 204, 0, 0.3); }
+        .badge.secondary { background-color: rgba(0, 255, 255, 0.1); color: var(--accent-secondary); border: 1px solid rgba(0, 255, 255, 0.3); }
         .badge.yellow { background-color: rgba(255, 204, 0, 0.1); color: var(--accent-warning); border: 1px solid rgba(255, 204, 0, 0.3); }
 
         /* ========================================== */
@@ -730,7 +733,7 @@
 
         .feed-item {
             padding: 16px 25px;
-            border-bottom: 1px solid rgba(30, 42, 74, 0.5);
+            border-bottom: 1px solid rgba(51, 45, 26, 0.5);
             display: flex;
             gap: 20px;
             align-items: center;
@@ -740,7 +743,7 @@
         }
 
         .feed-item:hover {
-            background-color: rgba(0, 212, 255, 0.04);
+            background-color: rgba(255, 204, 0, 0.04);
         }
 
         .feed-item:last-child {
@@ -748,16 +751,16 @@
         }
 
         .feed-otp {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 26px;
             color: var(--accent-primary);
             letter-spacing: 3px;
             min-width: 90px;
-            background: rgba(0, 212, 255, 0.1);
+            background: rgba(255, 204, 0, 0.1);
             padding: 8px 15px;
             border-radius: 8px;
             text-align: center;
-            border: 1px dashed rgba(0, 212, 255, 0.3);
+            border: 1px dashed rgba(255, 204, 0, 0.3);
         }
 
         .feed-meta {
@@ -768,7 +771,7 @@
         }
 
         .feed-num {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 14px;
             color: var(--text-main);
             font-weight: 700;
@@ -790,7 +793,7 @@
         }
 
         .countdown {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
             padding: 4px 10px;
             border-radius: 6px;
@@ -869,7 +872,7 @@
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
             color: var(--text-main);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 14px;
             outline: none;
             width: 100%;
@@ -908,7 +911,7 @@
         }
 
         .toggle input:checked + .toggle-track {
-            background-color: rgba(0, 212, 255, 0.15);
+            background-color: rgba(255, 204, 0, 0.15);
             border-color: var(--accent-primary);
         }
 
@@ -933,7 +936,7 @@
         /* Buttons */
         .btn-primary {
             padding: 12px 24px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             border: none;
             border-radius: var(--border-radius-sm);
             color: #ffffff;
@@ -1003,7 +1006,7 @@
             border-radius: 13px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(30, 42, 74, 0.5);
+            border: 1px solid rgba(51, 45, 26, 0.5);
         }
 
         .country-bar-fill {
@@ -1019,7 +1022,7 @@
             right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 12px;
             font-weight: 700;
             color: #ffffff;
@@ -1075,7 +1078,7 @@
         }
 
         .modal-header h3 {
-            font-family: 'Bebas Neue', sans-serif;
+            font-family: 'Orbitron', sans-serif;
             font-size: 26px;
             letter-spacing: 2px;
             color: var(--text-main);
@@ -1124,7 +1127,7 @@
             border-radius: var(--border-radius-sm);
             color: var(--text-main);
             outline: none;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 14px;
             transition: var(--transition-fast);
         }
@@ -1144,7 +1147,7 @@
             padding: 20px 25px;
             height: 600px;
             overflow-y: auto;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Share Tech Mono', monospace;
             font-size: 13px;
             line-height: 1.6;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
@@ -1223,7 +1226,7 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: var(--accent-primary);
             border: none;
             color: white;
             font-size: 24px;
@@ -1240,7 +1243,22 @@
         }
 
         @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); }
+            
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background-color: var(--surface-color);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform var(--transition-normal);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
             .sidebar.open { transform: translateX(0); }
             .topbar { left: 0; padding: 0 15px; }
             .main { margin-left: 0; padding-left: 15px; padding-right: 15px; }
@@ -1251,13 +1269,24 @@
             .setting-row { flex-direction: column; align-items: flex-start; }
             .setting-input { max-width: 100%; }
         }
+    
+        .blink {
+            animation: blinker 1s linear infinite;
+            color: var(--accent-danger);
+            font-size: 0.8em;
+            vertical-align: middle;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
 
     <div id="login-screen">
         <div class="login-box">
-            <div class="login-logo">BLAZE NXT</div>
+            <div class="login-logo">INFINITY SMS</div>
             <div class="login-sub">ENTERPRISE ADMIN PORTAL</div>
             
             <div class="input-wrapper">
@@ -1281,7 +1310,7 @@
         
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-logo">
-                <div class="logo-text">BLAZE NXT</div>
+                <div class="logo-text">INFINITY SMS</div>
                 <div class="logo-sub">OTP SYSTEM V2.0</div>
             </div>
             
@@ -1417,8 +1446,8 @@
             <div class="page" id="page-otp">
                 <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:25px;">
                     <div>
-                        <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px; line-height:1;">LIVE STREAM</h2>
-                        <p style="color:var(--text-muted); font-size:14px; margin-top:5px;"><i class="fa-solid fa-circle-info"></i> Auto-syncs every 5 seconds. Click any code to copy.</p>
+                        <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px; line-height:1;">LIVE OTP FEED <span class='blink'>●</span></h2>
+                        <p style="color:var(--text-muted); font-size:14px; margin-top:5px;"><i class="fa-solid fa-circle-info"></i> Real-time SMS interception terminal • Auto-refreshing every 3s. Click to copy OTP.</p>
                     </div>
                     <div style="display:flex; gap:10px;">
                         <button class="btn-outline" onclick="DataExporter.exportOTP()"><i class="fa-solid fa-download"></i> EXPORT CSV</button>
@@ -1429,7 +1458,7 @@
                 <div class="table-card">
                     <div class="table-header">
                         <div class="section-title" style="margin:0;"><i class="fa-solid fa-hourglass-half"></i> Active Queue</div>
-                        <span class="badge cyan" id="store-count">0 ACTIVE</span>
+                        <span class="badge primary" id="store-count">0 ACTIVE</span>
                     </div>
                     <div class="live-feed-container" id="otp-store-list">
                         </div>
@@ -1453,7 +1482,7 @@
 
             <div class="page" id="page-numbers">
                 <div style="margin-bottom:30px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">INVENTORY</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">INVENTORY</h2>
                     <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Global stock distribution and availability.</p>
                 </div>
                 
@@ -1466,7 +1495,7 @@
                 <div class="table-card">
                     <div class="table-header">
                         <div class="section-title" style="margin:0;"><i class="fa-solid fa-list"></i> Detailed Database</div>
-                        <span class="badge purple" id="total-numbers-badge">0 TOTAL</span>
+                        <span class="badge yellow" id="total-numbers-badge">0 TOTAL</span>
                     </div>
                     <table>
                         <thead>
@@ -1484,7 +1513,7 @@
 
             <div class="page" id="page-panels">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px;">INTEGRATIONS</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px;">INTEGRATIONS</h2>
                 </div>
                 
                 <div class="section-title"><i class="fa-solid fa-cloud-arrow-down"></i> REST API Providers</div>
@@ -1501,7 +1530,7 @@
             <div class="page" id="page-users">
                 <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:25px;">
                     <div>
-                        <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-success); letter-spacing:2px; line-height:1;">CLIENT BASE</h2>
+                        <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-success); letter-spacing:2px; line-height:1;">CLIENT BASE</h2>
                     </div>
                     <button class="btn-outline" onclick="DataExporter.exportUsers()"><i class="fa-solid fa-file-csv"></i> EXPORT DB</button>
                 </div>
@@ -1535,14 +1564,14 @@
 
             <div class="page" id="page-groups">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px;">ROUTING</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px;">ROUTING</h2>
                     <button class="btn-primary" onclick="ModalManager.open('group')"><i class="fa-solid fa-plus"></i> REGISTER GROUP</button>
                 </div>
 
                 <div class="table-card">
                     <div class="table-header">
                         <div class="section-title" style="margin:0;"><i class="fa-brands fa-telegram"></i> Target Chat IDs</div>
-                        <span class="badge purple" id="groups-count">0</span>
+                        <span class="badge yellow" id="groups-count">0</span>
                     </div>
                     <table>
                         <thead>
@@ -1560,7 +1589,7 @@
 
             <div class="page" id="page-forcejoin">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-warning); letter-spacing:2px;">MANDATORY CHANNELS</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-warning); letter-spacing:2px;">MANDATORY CHANNELS</h2>
                     <button class="btn-primary" onclick="ModalManager.open('forcejoin')"><i class="fa-solid fa-plus"></i> NEW RULE</button>
                 </div>
 
@@ -1570,7 +1599,7 @@
 
             <div class="page" id="page-settings">
                 <div style="margin-bottom:30px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--text-main); letter-spacing:2px;">CORE CONFIGURATION</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--text-main); letter-spacing:2px;">CORE CONFIGURATION</h2>
                 </div>
 
                 <div class="settings-grid">
@@ -1636,7 +1665,7 @@
 
             <div class="page" id="page-logs">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--text-muted); letter-spacing:2px;">SYSTEM OUTPUT</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--text-muted); letter-spacing:2px;">SYSTEM OUTPUT</h2>
                     <div style="display:flex; gap:10px;">
                         <button class="btn-outline" onclick="DataManager.loadLogs(100)">100 LINES</button>
                         <button class="btn-outline" onclick="DataManager.loadLogs(500)">500 LINES</button>
@@ -1653,7 +1682,7 @@
         <div class="page" id="page-ban">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
                 <div>
-                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-danger); letter-spacing:2px; line-height:1;">BAN MANAGER</h2>
+                    <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-danger); letter-spacing:2px; line-height:1;">BAN MANAGER</h2>
                     <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Block users from accessing the bot.</p>
                 </div>
             </div>
@@ -1682,7 +1711,7 @@
         <!-- BROADCAST PAGE -->
         <div class="page" id="page-broadcast">
             <div style="margin-bottom:25px;">
-                <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">BROADCAST CENTER</h2>
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-secondary); letter-spacing:2px; line-height:1;">BROADCAST CENTER</h2>
                 <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Send messages to all registered users.</p>
             </div>
             <div class="setting-group">
@@ -1710,7 +1739,7 @@
         <!-- OTP SEARCH PAGE -->
         <div class="page" id="page-search">
             <div style="margin-bottom:25px;">
-                <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px; line-height:1;">OTP SEARCH</h2>
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--accent-primary); letter-spacing:2px; line-height:1;">OTP SEARCH</h2>
                 <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Search OTP history by number, code, or service.</p>
             </div>
             <div style="display:flex; gap:12px; margin-bottom:25px; flex-wrap:wrap;">
@@ -1725,7 +1754,7 @@
         <!-- SYSTEM INFO PAGE -->
         <div class="page" id="page-sysinfo">
             <div style="margin-bottom:25px;">
-                <h2 style="font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--text-muted); letter-spacing:2px; line-height:1;">SYSTEM MONITOR</h2>
+                <h2 style="font-family:'Orbitron',sans-serif; font-size:36px; color:var(--text-muted); letter-spacing:2px; line-height:1;">SYSTEM MONITOR</h2>
             </div>
             <div class="cards-grid" id="sys-cards">
                 <div class="card"><div class="card-label">CPU USAGE</div><div class="card-value cyan" id="sys-cpu">--</div><div class="card-sub">Percent</div></div>
@@ -1735,7 +1764,7 @@
             </div>
             <div class="chart-card" style="margin-top:25px;">
                 <div class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> Dashboard Uptime</div>
-                <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--accent-primary); letter-spacing:4px; text-align:center; padding:30px 0;" id="sys-uptime-big">--:--:--</div>
+                <div style="font-family:'Orbitron',sans-serif; font-size:64px; color:var(--accent-primary); letter-spacing:4px; text-align:center; padding:30px 0;" id="sys-uptime-big">--:--:--</div>
             </div>
         </div>
 
@@ -1764,7 +1793,7 @@
          */
         const CONFIG = {
             API_BASE: '', // Current origin
-            REFRESH_INTERVAL: 5000,
+            REFRESH_INTERVAL: 3000,
             DEFAULT_LOG_LINES: 100
         };
 
@@ -2128,7 +2157,7 @@
                             datasets: [{
                                 label: 'OTPs Processed',
                                 data: data.map(x => x.count),
-                                backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                                backgroundColor: 'rgba(255, 204, 0, 0.1)',
                                 borderColor: '#00d4ff',
                                 borderWidth: 2,
                                 pointBackgroundColor: '#00d4ff',
@@ -2216,8 +2245,8 @@
                             <div class="feed-meta">
                                 <div class="feed-num">${r.number}</div>
                                 <div class="feed-svc">
-                                    <span class="badge cyan">${r.service || 'UNKNOWN'}</span>
-                                    <span class="badge purple">${r.source || 'SYS'}</span>
+                                    <span class="badge primary">${r.service || 'UNKNOWN'}</span>
+                                    <span class="badge yellow">${r.source || 'SYS'}</span>
                                 </div>
                             </div>
                             <div class="feed-time">${r.received_at ? r.received_at.slice(0,16) : ''}</div>
@@ -2313,7 +2342,7 @@
                                 ${i.uri}
                             </div>
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; border-top:1px solid rgba(255,255,255,0.05); padding-top:15px;">
-                                <span class="badge purple"><i class="fa-solid fa-link"></i> CONNECTED</span>
+                                <span class="badge yellow"><i class="fa-solid fa-link"></i> CONNECTED</span>
                                 <button class="btn-danger" style="padding:6px 12px; font-size:12px;" onclick="DataManager.deleteIntegration('ivas', '${name}')">DISCONNECT</button>
                             </div>
                         </div>
@@ -2522,7 +2551,7 @@
                         <td><code>${u.user_id}</code></td>
                         <td>${u.first_seen ? u.first_seen.substring(0,10) : 'N/A'}</td>
                         <td>${u.last_seen ? u.last_seen.substring(0,16).replace('T', ' ') : 'N/A'}</td>
-                        <td><span class="badge cyan">${u.total_commands} CMDs</span></td>
+                        <td><span class="badge primary">${u.total_commands} CMDs</span></td>
                     </tr>
                 `).join('') || '<tr><td colspan="4" style="text-align:center;padding:20px;">No users found</td></tr>';
 
@@ -2727,7 +2756,7 @@
                     }
                     tbody.innerHTML = [...log].reverse().map(b => `
                         <tr>
-                            <td><span class="badge cyan">#${b.id}</span></td>
+                            <td><span class="badge primary">#${b.id}</span></td>
                             <td style="max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${NotificationManager.escapeHTML(b.message.slice(0,60))}...</td>
                             <td><span class="badge ${b.status === 'pending' ? 'yellow' : 'green'}">${b.status.toUpperCase()}</span></td>
                             <td><span class="badge green">${b.sent}</span></td>
@@ -2758,8 +2787,8 @@
                             <div class="feed-meta">
                                 <div class="feed-num">${r.number}</div>
                                 <div class="feed-svc">
-                                    <span class="badge cyan">${r.service||'?'}</span>
-                                    <span class="badge purple">${r.source||''}</span>
+                                    <span class="badge primary">${r.service||'?'}</span>
+                                    <span class="badge yellow">${r.source||''}</span>
                                 </div>
                             </div>
                             <div class="feed-time">${r.received_at?.slice(0,16)||''}</div>
