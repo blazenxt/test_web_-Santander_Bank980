@@ -2032,7 +2032,11 @@
         const STATE = {
             token: '',
             currentPage: 'dashboard',
+            chartInstance: null,
             timerId: null,
+            usersData: [], // For pagination
+            itemsPerPage: 15,
+            currentUsersPage: 1,
             lastOTPCount: 0,
             soundEnabled: false,
             autoCopyEnabled: false,
@@ -2053,15 +2057,6 @@
             gain.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.1);
             osc.stop(audioContext.currentTime + 0.1);
         }
-
-            token: '',
-            currentPage: 'dashboard',
-            chartInstance: null,
-            timerId: null,
-            usersData: [], // For pagination
-            itemsPerPage: 15,
-            currentUsersPage: 1
-        };
 
         /**
          * Toast Notification System
