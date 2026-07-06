@@ -1272,23 +1272,11 @@
             .settings-grid { grid-template-columns: 1fr; }
         }
 
+        
         @media (max-width: 768px) {
-            
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: var(--sidebar-width);
-            background-color: var(--surface-color);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            transition: transform var(--transition-normal);
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        }
-
+            .sidebar {
+                transform: translateX(-100%);
+            }
             .sidebar.open { transform: translateX(0); }
             .topbar { left: 0; padding: 0 15px; }
             .main { margin-left: 0; padding-left: 15px; padding-right: 15px; }
@@ -1298,7 +1286,9 @@
             .user-badge span:last-child { display: none; } /* hide name on mobile */
             .setting-row { flex-direction: column; align-items: flex-start; }
             .setting-input { max-width: 100%; }
+            #page-buy > div:nth-child(2) { grid-template-columns: 1fr !important; }
         }
+
     
         .blink {
             animation: blinker 1s linear infinite;
@@ -1768,29 +1758,29 @@
                 <!-- Service Selection -->
                 <div class="table-card" style="padding: 20px;">
                     <h3 style="color: var(--text-main); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;"><i class="fa-solid fa-layer-group"></i> 1. Select Service</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
+                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;" id="service-list">
+                        <div class="feed-item service-opt" onclick="ProvisioningManager.selectService(this, 'WhatsApp', 0.85, 'fa-whatsapp', '#25D366')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <i class="fa-brands fa-whatsapp" style="font-size: 24px; color: #25D366;"></i>
                                 <span style="font-size: 18px; font-weight: 600;">WhatsApp</span>
                             </div>
                             <span class="badge primary">$0.85</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item service-opt" onclick="ProvisioningManager.selectService(this, 'Telegram', 0.60, 'fa-telegram', '#0088cc')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <i class="fa-brands fa-telegram" style="font-size: 24px; color: #0088cc;"></i>
                                 <span style="font-size: 18px; font-weight: 600;">Telegram</span>
                             </div>
                             <span class="badge primary">$0.60</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item service-opt" onclick="ProvisioningManager.selectService(this, 'Google / Gmail', 0.45, 'fa-google', '#FF0000')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <i class="fa-brands fa-google" style="font-size: 24px; color: #FF0000;"></i>
                                 <span style="font-size: 18px; font-weight: 600;">Google / Gmail</span>
                             </div>
                             <span class="badge primary">$0.45</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item service-opt" onclick="ProvisioningManager.selectService(this, 'Instagram', 0.35, 'fa-instagram', '#E1306C')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <i class="fa-brands fa-instagram" style="font-size: 24px; color: #E1306C;"></i>
                                 <span style="font-size: 18px; font-weight: 600;">Instagram</span>
@@ -1803,20 +1793,20 @@
                 <!-- Country Selection -->
                 <div class="table-card" style="padding: 20px;">
                     <h3 style="color: var(--text-main); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;"><i class="fa-solid fa-earth-americas"></i> 2. Select Country</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
+                    <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;" id="country-list">
+                        <div class="feed-item country-opt" onclick="ProvisioningManager.selectCountry(this, '🇺🇸 USA', '+1')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; background: rgba(255, 204, 0, 0.05);">
                             <span style="font-size: 16px;">🇺🇸 United States</span>
                             <span class="badge green">High Stock</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item country-opt" onclick="ProvisioningManager.selectCountry(this, '🇬🇧 UK', '+44')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 16px;">🇬🇧 United Kingdom</span>
                             <span class="badge green">High Stock</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item country-opt" onclick="ProvisioningManager.selectCountry(this, '🇮🇳 India', '+91')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 16px;">🇮🇳 India</span>
                             <span class="badge yellow">Medium Stock</span>
                         </div>
-                        <div class="feed-item" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="feed-item country-opt" onclick="ProvisioningManager.selectCountry(this, '🇷🇺 Russia', '+7')" style="border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-size: 16px;">🇷🇺 Russia</span>
                             <span class="badge red">Low Stock</span>
                         </div>
@@ -1825,8 +1815,8 @@
             </div>
 
             <div class="table-card" style="margin-top: 20px; padding: 20px; text-align: center; background: rgba(0, 255, 102, 0.05); border: 1px dashed var(--accent-success);">
-                <div style="font-size: 24px; color: var(--text-main); margin-bottom: 15px;">TOTAL: <span style="color: var(--accent-success); font-family: 'Orbitron', sans-serif;">$0.85</span></div>
-                <button class="btn-primary" style="font-size: 18px; padding: 15px 40px; background: var(--accent-success); color: #000;" onclick="NotificationManager.success('Number provisioned successfully! Check MY RENTALS tab.')"><i class="fa-solid fa-bolt"></i> PROVISION NUMBER NOW</button>
+                <div style="font-size: 24px; color: var(--text-main); margin-bottom: 15px;">TOTAL: <span id="provision-total-price" style="color: var(--accent-success); font-family: 'Orbitron', sans-serif;">$0.85</span></div>
+                <button class="btn-primary" id="btn-provision-now" style="font-size: 18px; padding: 15px 40px; background: var(--accent-success); color: #000;" onclick="ProvisioningManager.provisionNumber()"><i class="fa-solid fa-bolt"></i> PROVISION NUMBER NOW</button>
             </div>
         </div>
 
@@ -1837,36 +1827,8 @@
                 <p style="color:var(--text-muted); font-size:14px; margin-top:5px;">Awaiting SMS codes... Numbers automatically expire after 15 minutes.</p>
             </div>
             
-            <div class="table-card" style="padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--accent-primary);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> WhatsApp (🇺🇸 USA)</div>
-                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 32px; color: var(--accent-primary); letter-spacing: 2px;">+1 (555) 019-8372</div>
-                        <div style="margin-top: 10px; color: var(--text-main); font-size: 18px;">
-                            STATUS: <span class="blink" style="color: var(--accent-secondary);">WAITING FOR SMS...</span>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 48px; color: var(--text-muted);">14:59</div>
-                        <button class="btn-danger" style="margin-top: 10px;" onclick="NotificationManager.show('Rental cancelled. Funds refunded.', 'info')"><i class="fa-solid fa-xmark"></i> CANCEL</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="table-card" style="padding: 20px; border-left: 4px solid var(--accent-success); opacity: 0.7;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i> Telegram (🇬🇧 UK)</div>
-                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--text-muted); letter-spacing: 2px;">+44 7700 900077</div>
-                        <div style="margin-top: 10px; color: var(--accent-success); font-size: 24px; font-family: 'Orbitron', sans-serif;">
-                            CODE: <span style="background: rgba(0, 255, 102, 0.1); padding: 5px 15px; border-radius: 5px; border: 1px dashed var(--accent-success);">88291</span>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--accent-success);">COMPLETED</div>
-                        <button class="btn-outline" style="margin-top: 10px;"><i class="fa-solid fa-copy"></i> COPY</button>
-                    </div>
-                </div>
+            <div id="my-active-rentals-container">
+                <div style="text-align:center; padding: 40px; color: var(--text-muted);">No active rentals. Go to RENT NUMBER to provision one.</div>
             </div>
         </div>
 
@@ -2425,6 +2387,151 @@
         /**
          * Complex Data & State Manager
          */
+        
+        class ProvisioningManager {
+            static currentService = { name: 'WhatsApp', price: 0.85, icon: 'fa-whatsapp', color: '#25D366' };
+            static currentCountry = { name: '🇺🇸 USA', prefix: '+1' };
+            static myRentals = [];
+
+            static selectService(element, name, price, icon, color) {
+                document.querySelectorAll('.service-opt').forEach(el => el.style.background = 'transparent');
+                element.style.background = 'rgba(255, 204, 0, 0.05)';
+                this.currentService = { name, price, icon, color };
+                document.getElementById('provision-total-price').innerText = '$' + price.toFixed(2);
+            }
+
+            static selectCountry(element, name, prefix) {
+                document.querySelectorAll('.country-opt').forEach(el => el.style.background = 'transparent');
+                element.style.background = 'rgba(255, 204, 0, 0.05)';
+                this.currentCountry = { name, prefix };
+            }
+
+            static provisionNumber() {
+                const btn = document.getElementById('btn-provision-now');
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PROVISIONING...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    const randSuffix = Math.floor(1000000 + Math.random() * 9000000);
+                    const newNumber = `${this.currentCountry.prefix} ${randSuffix.toString().substring(0,3)} ${randSuffix.toString().substring(3)}`;
+                    
+                    const newRental = {
+                        id: Date.now(),
+                        service: this.currentService,
+                        country: this.currentCountry,
+                        number: newNumber,
+                        otp: null,
+                        expiresAt: Date.now() + 15 * 60 * 1000 // 15 mins
+                    };
+
+                    this.myRentals.unshift(newRental);
+                    this.renderRentals();
+                    
+                    btn.innerHTML = '<i class="fa-solid fa-bolt"></i> PROVISION NUMBER NOW';
+                    btn.disabled = false;
+                    
+                    NotificationManager.success(`Successfully assigned ${newNumber}`);
+                    Navigation.showPage('myotps');
+                }, 800);
+            }
+
+            static cancelRental(id) {
+                this.myRentals = this.myRentals.filter(r => r.id !== id);
+                NotificationManager.show('Rental cancelled. Funds refunded.', 'info');
+                this.renderRentals();
+            }
+
+            static updateRentalsWithFeeds(storeData) {
+                // Mock function to check if global OTP store matches our rentals
+                let updated = false;
+                this.myRentals.forEach(rental => {
+                    if(!rental.otp) {
+                        // In a real app we check storeData.number === rental.number. 
+                        // But since rental numbers are fake here, we fake OTPs 5% of the time, 
+                        // or we can just randomly fulfill them for the demo.
+                        if (Math.random() < 0.15) {
+                            rental.otp = Math.floor(100000 + Math.random() * 900000).toString();
+                            updated = true;
+                            NotificationManager.success(`New SMS Received for ${rental.number}!`);
+                            playBeep();
+                        }
+                    }
+                });
+                if(updated) this.renderRentals();
+            }
+
+            static renderRentals() {
+                const container = document.getElementById('my-active-rentals-container');
+                if (this.myRentals.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding: 40px; color: var(--text-muted);">No active rentals. Go to RENT NUMBER to provision one.</div>';
+                    return;
+                }
+
+                let html = '';
+                const now = Date.now();
+                this.myRentals.forEach(r => {
+                    const isCompleted = r.otp !== null;
+                    const timeLeft = Math.max(0, Math.floor((r.expiresAt - now) / 1000));
+                    const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+                    const secs = String(timeLeft % 60).padStart(2, '0');
+                    
+                    if (isCompleted) {
+                        html += `
+                        <div class="table-card" style="padding: 20px; border-left: 4px solid var(--accent-success); opacity: 0.8; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                                <div>
+                                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands ${r.service.icon}" style="color: ${r.service.color};"></i> ${r.service.name} (${r.country.name})</div>
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--text-muted); letter-spacing: 2px;">${r.number}</div>
+                                    <div style="margin-top: 10px; color: var(--accent-success); font-size: 24px; font-family: 'Orbitron', sans-serif;">
+                                        CODE: <span style="background: rgba(0, 255, 102, 0.1); padding: 5px 15px; border-radius: 5px; border: 1px dashed var(--accent-success);">${r.otp}</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--accent-success);">COMPLETED</div>
+                                    <button class="btn-outline" style="margin-top: 10px;" onclick="Utils.copyToClipboard('${r.otp}')"><i class="fa-solid fa-copy"></i> COPY</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    } else if (timeLeft <= 0) {
+                        html += `
+                        <div class="table-card" style="padding: 20px; border-left: 4px solid var(--accent-danger); opacity: 0.5; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                                <div>
+                                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands ${r.service.icon}" style="color: ${r.service.color};"></i> ${r.service.name} (${r.country.name})</div>
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--text-muted); letter-spacing: 2px;">${r.number}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 24px; color: var(--accent-danger);">EXPIRED</div>
+                                </div>
+                            </div>
+                        </div>`;
+                    } else {
+                        html += `
+                        <div class="table-card" style="padding: 20px; border-left: 4px solid var(--accent-primary); margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                                <div>
+                                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;"><i class="fa-brands ${r.service.icon}" style="color: ${r.service.color};"></i> ${r.service.name} (${r.country.name})</div>
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 32px; color: var(--accent-primary); letter-spacing: 2px;">${r.number}</div>
+                                    <div style="margin-top: 10px; color: var(--text-main); font-size: 18px;">
+                                        STATUS: <span class="blink" style="color: var(--accent-secondary);">WAITING FOR SMS...</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 48px; color: var(--text-muted);">${mins}:${secs}</div>
+                                    <button class="btn-danger" style="margin-top: 10px;" onclick="ProvisioningManager.cancelRental(${r.id})"><i class="fa-solid fa-xmark"></i> CANCEL</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                });
+                container.innerHTML = html;
+                document.getElementById('otp-my-metric').innerText = this.myRentals.length;
+            }
+        }
+        
+        setInterval(() => ProvisioningManager.renderRentals(), 1000);
+
+
         class DataManager {
 
             
