@@ -156,7 +156,6 @@ def telegram_login():
 
 # ── STATS ─────────────────────────────────────────────────────
 @app.route("/api/stats")
-@auth_required
 def stats():
     db = get_db()
     try:
@@ -197,7 +196,6 @@ def stats():
 
 # ── PANELS ────────────────────────────────────────────────────
 @app.route("/api/panels")
-@auth_required
 def panels():
     return jsonify(load_json(PANEL_FILE, {}))
 
@@ -230,7 +228,6 @@ def delete_panel(name):
 
 # ── IVAS ──────────────────────────────────────────────────────
 @app.route("/api/ivas")
-@auth_required
 def ivas():
     data = load_json(IVAS_FILE, {})
     safe = {}
@@ -268,7 +265,6 @@ def delete_ivas(name):
 
 # ── NUMBERS ───────────────────────────────────────────────────
 @app.route("/api/numbers")
-@auth_required
 def numbers():
     db = get_db()
     try:
@@ -292,7 +288,6 @@ def delete_country(country):
 
 # ── OTP HISTORY ───────────────────────────────────────────────
 @app.route("/api/otp/history")
-@auth_required
 def otp_history():
     limit = min(int(request.args.get("limit", 50)), 200)
     db    = get_db()
@@ -306,7 +301,6 @@ def otp_history():
         db.close()
 
 @app.route("/api/otp/store")
-@auth_required
 def otp_store():
     store = load_json(OTP_FILE, {})
     now   = time.time()
@@ -332,7 +326,6 @@ def clear_otp_store():
 
 # ── USERS ─────────────────────────────────────────────────────
 @app.route("/api/users")
-@auth_required
 def users():
     limit = min(int(request.args.get("limit", 50)), 500)
     db    = get_db()
@@ -349,7 +342,6 @@ def users():
 BANNED_FILE = os.path.join(BASE_DIR, "banned_users.json")
 
 @app.route("/api/users/banned")
-@auth_required
 def get_banned():
     return jsonify(load_json(BANNED_FILE, []))
 
@@ -407,13 +399,11 @@ def broadcast():
     return jsonify({"ok": True, "broadcast_id": entry["id"]})
 
 @app.route("/api/broadcast/history")
-@auth_required
 def broadcast_history():
     return jsonify(load_json(BROADCAST_LOG_FILE, []))
 
 # ── GROUPS ────────────────────────────────────────────────────
 @app.route("/api/groups")
-@auth_required
 def groups():
     return jsonify({"groups": load_json(GROUP_FILE, [])})
 
@@ -443,7 +433,6 @@ def delete_group(gid):
 
 # ── CONFIG / SETTINGS ─────────────────────────────────────────
 @app.route("/api/config")
-@auth_required
 def get_config():
     cfg = load_json(CONFIG_FILE, {})
     # Strip sensitive keys
@@ -465,7 +454,6 @@ def update_config():
 
 # ── FORCE JOIN ────────────────────────────────────────────────
 @app.route("/api/force_join")
-@auth_required
 def force_join():
     return jsonify(load_json(FORCE_JOIN_FILE, []))
 
@@ -493,7 +481,6 @@ def delete_force_join(idx):
 
 # ── OTP SEARCH ───────────────────────────────────────────────
 @app.route("/api/otp/search")
-@auth_required
 def search_otp():
     q = request.args.get("q", "").strip()
     if not q:
@@ -510,7 +497,6 @@ def search_otp():
 
 # ── SYSTEM INFO ───────────────────────────────────────────────
 @app.route("/api/system")
-@auth_required
 def system_info():
     uptime_s = int(time.time() - START_TIME)
     try:
@@ -536,7 +522,6 @@ def system_info():
 
 # ── LOGS ──────────────────────────────────────────────────────
 @app.route("/api/logs")
-@auth_required
 def logs():
     lines = int(request.args.get("lines", 100))
     try:
@@ -548,7 +533,6 @@ def logs():
 
 # ── OTP CHART DATA ────────────────────────────────────────────
 @app.route("/api/otp/chart")
-@auth_required
 def otp_chart():
     """OTP count per hour for last 24h."""
     db = get_db()

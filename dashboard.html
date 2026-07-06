@@ -2232,7 +2232,32 @@
          * Navigation & View Controller
          */
         class Navigation {
+            
+            static updateSidebarVisibility() {
+                const adminTabs = ['panels', 'users', 'groups', 'forcejoin', 'settings', 'logs', 'ban', 'broadcast', 'sysinfo'];
+                adminTabs.forEach(tab => {
+                    const el = document.querySelector(`[data-page="${tab}"]`);
+                    if(el) el.style.display = STATE.token ? 'block' : 'none';
+                });
+                
+                const loginEl = document.querySelector(`[data-page="admin"]`);
+                if(loginEl) loginEl.style.display = STATE.token ? 'none' : 'block';
+            }
+
             static launchApp() {
+                                let path = window.location.pathname.replace('/', '') || 'dashboard';
+                
+                // If they specifically ask for /admin, show login. 
+                if (path === 'admin') {
+                    if (!STATE.token) {
+                        document.getElementById('login-screen').style.display = 'flex';
+                        document.getElementById('app').style.display = 'none';
+                        return; // Stop here until logged in
+                    } else {
+                        path = 'dashboard';
+                    }
+                }
+                
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app').style.display = 'block';
                 
@@ -2240,6 +2265,7 @@
                 const validPages = ['dashboard', 'otp', 'numbers', 'search', 'api', 'panels', 'users', 'groups', 'forcejoin', 'settings', 'logs', 'ban', 'broadcast', 'sysinfo', 'buy', 'myotps'];
                 if (!validPages.includes(path)) path = 'dashboard';
                 
+                this.updateSidebarVisibility();
                 this.showPage(path, false);
                 this.startDaemon();
 
@@ -2255,6 +2281,30 @@
             }
 
             static showPage(pageName, pushState = true) {
+                
+                // If the user is unauthenticated and tries to access an admin-only page, bump them to login
+                const adminPages = ['panels', 'users', 'groups', 'forcejoin', 'settings', 'logs', 'ban', 'broadcast', 'sysinfo'];
+                if (adminPages.includes(pageName) && !STATE.token) {
+                    pageName = 'admin';
+                    document.getElementById('login-screen').style.display = 'flex';
+                    document.getElementById('app').style.display = 'none';
+                    if (pushState) window.history.pushState({page: 'admin'}, '', '/admin');
+                    return;
+                }
+
+                if (pageName === 'admin') {
+                    if(!STATE.token) {
+                        document.getElementById('login-screen').style.display = 'flex';
+                        document.getElementById('app').style.display = 'none';
+                        window.history.pushState({page: 'admin'}, '', '/admin');
+                        return;
+                    } else {
+                        pageName = 'dashboard';
+                    }
+                }
+                
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
                 if (pushState) {
                     window.history.pushState({page: pageName}, '', '/' + pageName);
                 }
