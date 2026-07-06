@@ -14,6 +14,8 @@ import re
 import ssl
 import json
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import sys
 import time
 import logging
@@ -32,14 +34,12 @@ from telegram.ext import (
 # ═══════════════════════════════════════════════════════════════
 #  CONFIGURATION
 # ═══════════════════════════════════════════════════════════════
-BOT_TOKEN      = "8844128671:AAFRLGcU9ns8QRje_AjMU1uKsFhXxHEDzbo"
-OWNER_IDS      = [8708907310,8726642457,5618954306,6059791675
-]
-ADMIN_IDS      = [8708907310,8726642457,5618954306,6059791675
-]
-OTP_GROUP_LINK = "https://t.me/+DfUnv_qgZEFkZWU8"
-BOT_NAME       = "BlazeNXT OTP Bot"
-DEV_CONTACT    = "@firstoget"	
+BOT_TOKEN      = os.getenv("BOT_TOKEN", "8844128671:AAFRLGcU9ns8QRje_AjMU1uKsFhXxHEDzbo")
+OWNER_IDS      = [int(x.strip()) for x in os.getenv("OWNER_IDS", "8708907310,8726642457,5618954306,6059791675").split(",") if x.strip()]
+ADMIN_IDS      = [int(x.strip()) for x in os.getenv("ADMIN_IDS", "8708907310,8726642457,5618954306,6059791675").split(",") if x.strip()]
+OTP_GROUP_LINK = os.getenv("OTP_GROUP_LINK", "https://t.me/+DfUnv_qgZEFkZWU8")
+BOT_NAME       = os.getenv("BOT_NAME", "BlazeNXT OTP Bot")
+DEV_CONTACT    = os.getenv("DEV_CONTACT", "@firstoget")
 REQUIRED_CHANNELS = []
 DEFAULT_PANELS = {
     "BLAZENXT PANEL": {
@@ -55,7 +55,7 @@ DEFAULT_PANELS = {
         "api_type": "ps"       # 🟢 PS API (pscall.net)
     },
 }
-OTP_GROUP_IDS = [-1003902733109]
+OTP_GROUP_IDS = [int(x.strip()) for x in os.getenv("OTP_GROUP_IDS", "-1003902733109").split(",") if x.strip()]
 
 OTP_FILE      = "otp_store.json"
 PANEL_FILE    = "panels.json"
