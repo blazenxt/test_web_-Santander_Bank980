@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BOT_TOKEN       = os.getenv("BOT_TOKEN", "")
-DASHBOARD_PASS  = os.getenv("DASHBOARD_PASS", "admin123")
+DASHBOARD_PASS  = os.getenv("DASHBOARD_PASS", "admin")
 DASHBOARD_SECRET= os.getenv("DASHBOARD_SECRET", "changeme_secret_32chars_minimum!")
 DASHBOARD_PORT  = int(os.getenv("DASHBOARD_PORT", "8080"))
 BASE_DIR        = os.path.dirname(os.path.abspath(__file__))

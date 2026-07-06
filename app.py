@@ -34,23 +34,23 @@ from telegram.ext import (
 # ═══════════════════════════════════════════════════════════════
 #  CONFIGURATION
 # ═══════════════════════════════════════════════════════════════
-BOT_TOKEN      = os.getenv("BOT_TOKEN", "8844128671:AAFRLGcU9ns8QRje_AjMU1uKsFhXxHEDzbo")
-OWNER_IDS      = [int(x.strip()) for x in os.getenv("OWNER_IDS", "8708907310,8726642457,5618954306,6059791675").split(",") if x.strip()]
-ADMIN_IDS      = [int(x.strip()) for x in os.getenv("ADMIN_IDS", "8708907310,8726642457,5618954306,6059791675").split(",") if x.strip()]
+BOT_TOKEN      = os.getenv("BOT_TOKEN", "")
+OWNER_IDS      = [int(x.strip()) for x in os.getenv("OWNER_IDS", "").split(",") if x.strip()]
+ADMIN_IDS      = [int(x.strip()) for x in os.getenv("ADMIN_IDS", "").split(",") if x.strip()]
 OTP_GROUP_LINK = os.getenv("OTP_GROUP_LINK", "https://t.me/+DfUnv_qgZEFkZWU8")
 BOT_NAME       = os.getenv("BOT_NAME", "BlazeNXT OTP Bot")
 DEV_CONTACT    = os.getenv("DEV_CONTACT", "@firstoget")
 REQUIRED_CHANNELS = []
 DEFAULT_PANELS = {
     "BLAZENXT PANEL": {
-        "url":      "http://147.135.212.197/crapi/time/viewstats",
-        "token":    "RVNWNEVBiGJeZodidIuGaXODkXiFlY9dYXNoRn1OZ2t6Z3lha1Y=",
+        "url":      "http://your-panel.com/crapi/time/viewstats",
+        "token":    "YOUR_OLD_API_TOKEN_HERE",
         "records":  20,
         "api_type": "old"        # 🔵 Old API (viewstats)
     },
     "PS PANEL": {
         "url":      "https://pscall.net/restapi/smsreport",
-        "token":    "SFRXSj1SS4aEf4h1iJCIhXaRUQ==",
+        "token":    "YOUR_PS_API_TOKEN_HERE",
         "records":  20,
         "api_type": "ps"       # 🟢 PS API (pscall.net)
     },
@@ -3201,7 +3201,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Send the API token or key.\n\n"
                 "• For Old API and MO API — send the <b>token</b>\n"
                 "• For PS API — send the <b>key</b>\n"
-                "  (e.g. <code>SFRXSj1SS4aEf4h1iJCIhXaRUQ==</code>)",
+                "  (e.g. <code>YOUR_PS_API_TOKEN_HERE</code>)",
                 parse_mode="HTML")
         elif state["step"] == "token":
             state["data"]["token"] = text
