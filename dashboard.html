@@ -79,18 +79,24 @@
             </div>
 
             <div class="py-4 px-3 space-y-5 overflow-y-auto h-[calc(100%-80px)]">
+                
                 <div class="space-y-1">
                     <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">MAIN MENU</h3>
                     <button onclick="Navigation.showPage('dashboard')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="dashboard"><i class="fa-solid fa-chart-pie w-4"></i> Dashboard</button>
                     <button onclick="Navigation.showPage('otp')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="otp"><i class="fa-solid fa-satellite-dish w-4"></i> Live OTP Feed</button>
+                    <button onclick="Navigation.showPage('timeline')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="timeline"><i class="fa-solid fa-clock-rotate-left w-4"></i> Timeline</button>
                     <button onclick="Navigation.showPage('search')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="search"><i class="fa-solid fa-magnifying-glass w-4"></i> OTP Search</button>
+                    <button onclick="Navigation.showPage('notifications')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="notifications"><i class="fa-solid fa-bell w-4"></i> Notifications</button>
+                    <button onclick="Navigation.showPage('about')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="about"><i class="fa-solid fa-circle-info w-4"></i> About</button>
                 </div>
 
                 <div class="space-y-1">
                     <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">CONSUMER PANEL</h3>
                     <button onclick="Navigation.showPage('buy')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="buy"><i class="fa-solid fa-cart-shopping w-4"></i> Rent Number</button>
-                    <button onclick="Navigation.showPage('myotps')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="myotps"><i class="fa-solid fa-clock-rotate-left w-4"></i> My Rentals</button>
+                    <button onclick="Navigation.showPage('myotps')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="myotps"><i class="fa-solid fa-sim-card w-4"></i> My Rentals</button>
+                    <button onclick="Navigation.showPage('api')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="api"><i class="fa-solid fa-code w-4"></i> Connect / API</button>
                 </div>
+
 
                 <div class="space-y-1 admin-only" style="display:none;">
                     <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">ENTERPRISE ADMIN</h3>
@@ -229,6 +235,121 @@
                 </div>
             </div>
 
+            
+        <!-- PAGE: TIMELINE -->
+        <div id="page-timeline" class="page-container container py-6 space-y-5 hidden-page">
+            <div>
+                <h1 class="font-display text-xl font-bold tracking-wider text-primary neon-glow">TIMELINE</h1>
+                <p class="font-body text-sm text-muted-foreground mt-1">Chronological OTP activity log</p>
+            </div>
+            <div class="space-y-5" id="timeline-container">
+                <div class="text-center py-12"><i class="fa-solid fa-spinner fa-spin text-muted-foreground text-2xl"></i></div>
+            </div>
+        </div>
+
+        <!-- PAGE: NOTIFICATIONS -->
+        <div id="page-notifications" class="page-container container py-6 space-y-4 hidden-page">
+            <div>
+                <h1 class="font-display text-xl font-bold tracking-wider text-primary neon-glow">NOTIFICATIONS</h1>
+                <p class="font-body text-sm text-muted-foreground mt-1">Admin alerts & system notifications</p>
+            </div>
+            <div class="cyber-card rounded-lg p-12 text-center" id="notifications-container">
+                <i class="fa-solid fa-bell-slash h-8 w-8 mx-auto mb-3 text-muted-foreground"></i>
+                <p class="font-display text-sm text-muted-foreground">No notifications yet</p>
+            </div>
+        </div>
+
+        <!-- PAGE: ABOUT -->
+        <div id="page-about" class="page-container container py-6 space-y-6 hidden-page">
+            <div class="text-center space-y-3">
+                <div class="flex justify-center">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl gradient-gold">
+                        <i class="fa-solid fa-bolt h-7 w-7 text-primary-foreground"></i>
+                    </div>
+                </div>
+                <h1 class="font-display text-2xl font-bold tracking-wider text-primary neon-glow">INFINITY<span class="text-accent">SMS</span> CLONE</h1>
+                <p class="font-body text-sm text-muted-foreground max-w-md mx-auto">Premium real-time OTP receiving platform. Monitor SMS verification codes from multiple panels with instant delivery.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="cyber-card rounded-lg p-4 space-y-2">
+                    <i class="fa-solid fa-bolt text-primary h-5 w-5"></i>
+                    <h3 class="font-display text-[11px] font-bold text-foreground tracking-wider">Real-Time</h3>
+                    <p class="font-body text-[11px] text-muted-foreground leading-relaxed">OTPs delivered instantly as they arrive</p>
+                </div>
+                <div class="cyber-card rounded-lg p-4 space-y-2">
+                    <i class="fa-solid fa-earth-americas text-primary h-5 w-5"></i>
+                    <h3 class="font-display text-[11px] font-bold text-foreground tracking-wider">Multi-Country</h3>
+                    <p class="font-body text-[11px] text-muted-foreground leading-relaxed">Numbers from multiple countries & carriers</p>
+                </div>
+                <div class="cyber-card rounded-lg p-4 space-y-2">
+                    <i class="fa-solid fa-lock text-primary h-5 w-5"></i>
+                    <h3 class="font-display text-[11px] font-bold text-foreground tracking-wider">Secure</h3>
+                    <p class="font-body text-[11px] text-muted-foreground leading-relaxed">Encrypted connections & auto-expiring codes</p>
+                </div>
+                <div class="cyber-card rounded-lg p-4 space-y-2">
+                    <i class="fa-brands fa-telegram text-primary h-5 w-5"></i>
+                    <h3 class="font-display text-[11px] font-bold text-foreground tracking-wider">Bot Integration</h3>
+                    <p class="font-body text-[11px] text-muted-foreground leading-relaxed">Forward OTPs to your Telegram bot</p>
+                </div>
+            </div>
+
+            <div class="cyber-card rounded-lg p-5 neon-border space-y-4 text-center">
+                <h2 class="font-display text-sm font-bold tracking-wider text-accent">JOIN OUR COMMUNITY</h2>
+                <p class="font-body text-xs text-muted-foreground">Stay updated with latest features, numbers, and announcements</p>
+                <div class="flex items-center justify-center gap-3">
+                    <a href="#" class="flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 font-display text-[10px] font-bold text-muted-foreground hover:text-neon-green hover:border-neon-green/40 transition-colors tracking-wider">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> WHATSAPP
+                    </a>
+                    <a href="#" class="flex items-center gap-2 rounded-lg border border-border px-4 py-2.5 font-display text-[10px] font-bold text-muted-foreground hover:text-accent hover:border-accent/40 transition-colors tracking-wider">
+                        <i class="fa-brands fa-telegram text-lg"></i> TELEGRAM
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: CONNECT / API DOCS -->
+        <div id="page-api" class="page-container container py-6 space-y-5 hidden-page">
+            <div>
+                <h1 class="font-display text-xl font-bold tracking-wider text-primary neon-glow">DEVELOPER API</h1>
+                <p class="font-body text-sm text-muted-foreground mt-1">Integrate BlazeNXT into your own applications seamlessly.</p>
+            </div>
+            
+            <div class="cyber-card rounded-lg p-6 neon-border">
+                <h3 class="font-display text-sm font-bold text-accent tracking-wider mb-4">AUTHENTICATION</h3>
+                <p class="font-body text-sm text-muted-foreground mb-4">All API requests require an API key passed in the <code>Authorization</code> header.</p>
+                <div class="rounded-md border border-border bg-background p-4 font-mono text-[11px] text-neon-green mb-6 overflow-x-auto">
+                    Authorization: Bearer YOUR_API_KEY
+                </div>
+
+                <h3 class="font-display text-sm font-bold text-accent tracking-wider mb-4 border-t border-border pt-4">ENDPOINTS</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="rounded bg-neon-green/20 px-2 py-1 font-mono text-[10px] font-bold text-neon-green">GET</span>
+                            <code class="font-mono text-sm text-foreground">/api/v1/numbers/available</code>
+                        </div>
+                        <p class="font-body text-sm text-muted-foreground">Retrieve a list of currently available virtual numbers and their stock levels.</p>
+                    </div>
+                    
+                    <div class="border-t border-border pt-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="rounded bg-accent/20 px-2 py-1 font-mono text-[10px] font-bold text-accent">POST</span>
+                            <code class="font-mono text-sm text-foreground">/api/v1/otp/request</code>
+                        </div>
+                        <p class="font-body text-sm text-muted-foreground">Request a new number for OTP verification for a specific service.</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-3 border-t border-border pt-6">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" onclick="NotificationManager.success('API Key generated and copied!')">
+                        <i class="fa-solid fa-key mr-2"></i> GENERATE API KEY
+                    </button>
+                </div>
+            </div>
+        </div>
+
             <!-- PAGE: BUY NUMBER (CONSUMER) -->
             <div id="page-buy" class="page-container container py-6 space-y-6 hidden-page">
                 <div class="space-y-2">
@@ -260,9 +381,8 @@
 
                     <div class="cyber-card rounded-lg p-4 neon-border space-y-3">
                         <h3 class="font-display text-xs font-bold text-accent tracking-wider">2. SELECT COUNTRY</h3>
-                        <div class="space-y-2" id="dynamic-country-list">
+                        <div class="space-y-2" id="dynamic-country-list" style="max-height: 400px; overflow-y: auto;">
                             <div class="p-8 text-center text-muted-foreground font-mono text-xs"><i class="fa-solid fa-spinner fa-spin"></i> Loading stock...</div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -419,6 +539,7 @@
                 const pageEl = document.getElementById(`page-${pageName}`);
                 if(pageEl) { pageEl.classList.remove('hidden-page'); pageEl.classList.add('active-page'); }
                 if(pageName === 'buy') ProvisioningManager.loadStock();
+                if(pageName === 'timeline') OTPSearch.loadTimeline();
                 
                 document.querySelectorAll(`[data-page="${pageName}"]`).forEach(n => {
                     if(n.classList.contains('nav-item')) { n.classList.remove('text-muted-foreground'); n.classList.add('bg-muted/50','text-primary'); }
@@ -436,7 +557,7 @@
 
             static launchApp() {
                 let path = window.location.pathname.replace('/', '') || 'dashboard';
-                const validPages = ['dashboard', 'otp', 'search', 'buy', 'myotps', 'panels', 'users', 'groups', 'sysinfo', 'ban', 'broadcast'];
+                const validPages = ['dashboard', 'otp', 'search', 'buy', 'myotps', 'panels', 'users', 'groups', 'sysinfo', 'ban', 'broadcast', 'timeline', 'notifications', 'about', 'api'];
                 if (!validPages.includes(path) && path !== 'admin') path = 'dashboard';
                 
                 this.showPage(path, false);
@@ -592,7 +713,63 @@
         }
 
         class OTPSearch {
-            static async search() {
+            
+            static async loadTimeline() {
+                const el = document.getElementById('timeline-container');
+                try {
+                    const rows = await APIService.request('/api/otp/history?limit=100');
+                    if (!rows.length) {
+                        el.innerHTML = '<div class="cyber-card rounded-lg p-12 text-center text-muted-foreground font-mono text-xs">No activity log found.</div>';
+                        return;
+                    }
+                    
+                    // Group by date
+                    const groups = {};
+                    rows.forEach(r => {
+                        const date = r.received_at ? r.received_at.split(' ')[0] : 'Unknown Date';
+                        if(!groups[date]) groups[date] = [];
+                        groups[date].push(r);
+                    });
+                    
+                    let html = '';
+                    for (const [date, items] of Object.entries(groups)) {
+                        html += `
+                        <div>
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="h-px flex-1 bg-border"></div>
+                                <span class="font-display text-[10px] font-bold text-muted-foreground tracking-wider px-2">${date}</span>
+                                <div class="h-px flex-1 bg-border"></div>
+                            </div>
+                            <div class="relative pl-6 space-y-3">
+                                <div class="absolute left-2 top-2 bottom-2 w-px bg-border"></div>`;
+                        
+                        items.forEach(i => {
+                            const time = i.received_at ? i.received_at.substring(11,16) : '--:--';
+                            html += `
+                                <div class="relative">
+                                    <div class="absolute -left-[18px] top-2.5 h-2 w-2 rounded-full gradient-gold"></div>
+                                    <div class="cyber-card rounded-lg p-3 flex items-center gap-3">
+                                        <div class="min-w-0 flex-1">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-display text-[10px] font-bold text-foreground">${i.service || 'SMS'}</span>
+                                                <span class="font-mono text-[9px] text-primary bg-primary/10 px-1.5 py-0.5 rounded">${i.otp}</span>
+                                            </div>
+                                            <p class="font-mono text-[9px] text-muted-foreground mt-0.5">🌍 ${i.number} • SOURCE: ${i.source || 'SYS'}</p>
+                                        </div>
+                                        <div class="font-mono text-[10px] text-muted-foreground shrink-0">${time}</div>
+                                    </div>
+                                </div>`;
+                        });
+                        
+                        html += `</div></div>`;
+                    }
+                    el.innerHTML = html;
+                } catch(e) {
+                    el.innerHTML = '<div class="cyber-card rounded-lg p-12 text-center text-destructive font-mono text-xs">Failed to load timeline.</div>';
+                }
+            }
+
+        static async search() {
                 const q = document.getElementById('search-q').value.trim();
                 if (!q) return;
                 const el = document.getElementById('search-results');
@@ -633,21 +810,30 @@
                         return;
                     }
                     
-                    let html = '';
-                    data.forEach((item, index) => {
-                        const stockLevel = item.count > 50 ? 'HIGH STOCK' : (item.count > 10 ? 'MED STOCK' : 'LOW STOCK');
-                        const stockColor = item.count > 50 ? 'text-neon-green border-neon-green/40' : (item.count > 10 ? 'text-accent border-accent/40' : 'text-destructive border-destructive/40');
+                    
+                    // Use massive exhaustive static list + live counts from server
+                    const allCountries = [{"name": "Afghanistan", "code": "AF", "prefix": "+93", "flag": "\ud83c\udde6\ud83c\uddeb"}, {"name": "Albania", "code": "AL", "prefix": "+355", "flag": "\ud83c\udde6\ud83c\uddf1"}, {"name": "Algeria", "code": "DZ", "prefix": "+213", "flag": "\ud83c\udde9\ud83c\uddff"}, {"name": "Andorra", "code": "AD", "prefix": "+376", "flag": "\ud83c\udde6\ud83c\udde9"}, {"name": "Angola", "code": "AO", "prefix": "+244", "flag": "\ud83c\udde6\ud83c\uddf4"}, {"name": "Argentina", "code": "AR", "prefix": "+54", "flag": "\ud83c\udde6\ud83c\uddf7"}, {"name": "Armenia", "code": "AM", "prefix": "+374", "flag": "\ud83c\udde6\ud83c\uddf2"}, {"name": "Australia", "code": "AU", "prefix": "+61", "flag": "\ud83c\udde6\ud83c\uddfa"}, {"name": "Austria", "code": "AT", "prefix": "+43", "flag": "\ud83c\udde6\ud83c\uddf9"}, {"name": "Azerbaijan", "code": "AZ", "prefix": "+994", "flag": "\ud83c\udde6\ud83c\uddff"}, {"name": "Bahamas", "code": "BS", "prefix": "+1", "flag": "\ud83c\udde7\ud83c\uddf8"}, {"name": "Bahrain", "code": "BH", "prefix": "+973", "flag": "\ud83c\udde7\ud83c\udded"}, {"name": "Bangladesh", "code": "BD", "prefix": "+880", "flag": "\ud83c\udde7\ud83c\udde9"}, {"name": "Barbados", "code": "BB", "prefix": "+1", "flag": "\ud83c\udde7\ud83c\udde7"}, {"name": "Belarus", "code": "BY", "prefix": "+375", "flag": "\ud83c\udde7\ud83c\uddfe"}, {"name": "Belgium", "code": "BE", "prefix": "+32", "flag": "\ud83c\udde7\ud83c\uddea"}, {"name": "Belize", "code": "BZ", "prefix": "+501", "flag": "\ud83c\udde7\ud83c\uddff"}, {"name": "Benin", "code": "BJ", "prefix": "+229", "flag": "\ud83c\udde7\ud83c\uddef"}, {"name": "Bhutan", "code": "BT", "prefix": "+975", "flag": "\ud83c\udde7\ud83c\uddf9"}, {"name": "Bolivia", "code": "BO", "prefix": "+591", "flag": "\ud83c\udde7\ud83c\uddf4"}, {"name": "Bosnia and Herzegovina", "code": "BA", "prefix": "+387", "flag": "\ud83c\udde7\ud83c\udde6"}, {"name": "Botswana", "code": "BW", "prefix": "+267", "flag": "\ud83c\udde7\ud83c\uddfc"}, {"name": "Brazil", "code": "BR", "prefix": "+55", "flag": "\ud83c\udde7\ud83c\uddf7"}, {"name": "Brunei", "code": "BN", "prefix": "+673", "flag": "\ud83c\udde7\ud83c\uddf3"}, {"name": "Bulgaria", "code": "BG", "prefix": "+359", "flag": "\ud83c\udde7\ud83c\uddec"}, {"name": "Burkina Faso", "code": "BF", "prefix": "+226", "flag": "\ud83c\udde7\ud83c\uddeb"}, {"name": "Burundi", "code": "BI", "prefix": "+257", "flag": "\ud83c\udde7\ud83c\uddee"}, {"name": "Cabo Verde", "code": "CV", "prefix": "+238", "flag": "\ud83c\udde8\ud83c\uddfb"}, {"name": "Cambodia", "code": "KH", "prefix": "+855", "flag": "\ud83c\uddf0\ud83c\udded"}, {"name": "Cameroon", "code": "CM", "prefix": "+237", "flag": "\ud83c\udde8\ud83c\uddf2"}, {"name": "Canada", "code": "CA", "prefix": "+1", "flag": "\ud83c\udde8\ud83c\udde6"}, {"name": "Central African Republic", "code": "CF", "prefix": "+236", "flag": "\ud83c\udde8\ud83c\uddeb"}, {"name": "Chad", "code": "TD", "prefix": "+235", "flag": "\ud83c\uddf9\ud83c\udde9"}, {"name": "Chile", "code": "CL", "prefix": "+56", "flag": "\ud83c\udde8\ud83c\uddf1"}, {"name": "China", "code": "CN", "prefix": "+86", "flag": "\ud83c\udde8\ud83c\uddf3"}, {"name": "Colombia", "code": "CO", "prefix": "+57", "flag": "\ud83c\udde8\ud83c\uddf4"}, {"name": "Comoros", "code": "KM", "prefix": "+269", "flag": "\ud83c\uddf0\ud83c\uddf2"}, {"name": "Congo", "code": "CG", "prefix": "+242", "flag": "\ud83c\udde8\ud83c\uddec"}, {"name": "Costa Rica", "code": "CR", "prefix": "+506", "flag": "\ud83c\udde8\ud83c\uddf7"}, {"name": "Croatia", "code": "HR", "prefix": "+385", "flag": "\ud83c\udded\ud83c\uddf7"}, {"name": "Cuba", "code": "CU", "prefix": "+53", "flag": "\ud83c\udde8\ud83c\uddfa"}, {"name": "Cyprus", "code": "CY", "prefix": "+357", "flag": "\ud83c\udde8\ud83c\uddfe"}, {"name": "Czech Republic", "code": "CZ", "prefix": "+420", "flag": "\ud83c\udde8\ud83c\uddff"}, {"name": "Denmark", "code": "DK", "prefix": "+45", "flag": "\ud83c\udde9\ud83c\uddf0"}, {"name": "Djibouti", "code": "DJ", "prefix": "+253", "flag": "\ud83c\udde9\ud83c\uddef"}, {"name": "Dominica", "code": "DM", "prefix": "+1", "flag": "\ud83c\udde9\ud83c\uddf2"}, {"name": "Dominican Republic", "code": "DO", "prefix": "+1", "flag": "\ud83c\udde9\ud83c\uddf4"}, {"name": "Ecuador", "code": "EC", "prefix": "+593", "flag": "\ud83c\uddea\ud83c\udde8"}, {"name": "Egypt", "code": "EG", "prefix": "+20", "flag": "\ud83c\uddea\ud83c\uddec"}, {"name": "El Salvador", "code": "SV", "prefix": "+503", "flag": "\ud83c\uddf8\ud83c\uddfb"}, {"name": "Equatorial Guinea", "code": "GQ", "prefix": "+240", "flag": "\ud83c\uddec\ud83c\uddf6"}, {"name": "Eritrea", "code": "ER", "prefix": "+291", "flag": "\ud83c\uddea\ud83c\uddf7"}, {"name": "Estonia", "code": "EE", "prefix": "+372", "flag": "\ud83c\uddea\ud83c\uddea"}, {"name": "Eswatini", "code": "CV", "prefix": "+268", "flag": "\ud83c\uddf8\ud83c\uddff"}, {"name": "Ethiopia", "code": "ET", "prefix": "+251", "flag": "\ud83c\uddea\ud83c\uddf9"}, {"name": "Fiji", "code": "FJ", "prefix": "+679", "flag": "\ud83c\uddeb\ud83c\uddef"}, {"name": "Finland", "code": "FI", "prefix": "+358", "flag": "\ud83c\uddeb\ud83c\uddee"}, {"name": "France", "code": "FR", "prefix": "+33", "flag": "\ud83c\uddeb\ud83c\uddf7"}, {"name": "Gabon", "code": "GA", "prefix": "+241", "flag": "\ud83c\uddec\ud83c\udde6"}, {"name": "Gambia", "code": "GM", "prefix": "+220", "flag": "\ud83c\uddec\ud83c\uddf2"}, {"name": "Georgia", "code": "GE", "prefix": "+995", "flag": "\ud83c\uddec\ud83c\uddea"}, {"name": "Germany", "code": "DE", "prefix": "+49", "flag": "\ud83c\udde9\ud83c\uddea"}, {"name": "Ghana", "code": "GH", "prefix": "+233", "flag": "\ud83c\uddec\ud83c\udded"}, {"name": "Greece", "code": "GR", "prefix": "+30", "flag": "\ud83c\uddec\ud83c\uddf7"}, {"name": "Grenada", "code": "GD", "prefix": "+1", "flag": "\ud83c\uddec\ud83c\udde9"}, {"name": "Guatemala", "code": "GT", "prefix": "+502", "flag": "\ud83c\uddec\ud83c\uddf9"}, {"name": "Guinea", "code": "GN", "prefix": "+224", "flag": "\ud83c\uddec\ud83c\uddf3"}, {"name": "Guinea-Bissau", "code": "GW", "prefix": "+245", "flag": "\ud83c\uddec\ud83c\uddfc"}, {"name": "Guyana", "code": "GY", "prefix": "+1", "flag": "\ud83c\uddec\ud83c\uddfe"}, {"name": "Haiti", "code": "HT", "prefix": "+509", "flag": "\ud83c\udded\ud83c\uddf9"}, {"name": "Honduras", "code": "HN", "prefix": "+504", "flag": "\ud83c\udded\ud83c\uddf3"}, {"name": "Hungary", "code": "HU", "prefix": "+36", "flag": "\ud83c\udded\ud83c\uddfa"}, {"name": "Iceland", "code": "IS", "prefix": "+354", "flag": "\ud83c\uddee\ud83c\uddf8"}, {"name": "India", "code": "IN", "prefix": "+91", "flag": "\ud83c\uddee\ud83c\uddf3"}, {"name": "Indonesia", "code": "ID", "prefix": "+62", "flag": "\ud83c\uddee\ud83c\udde9"}, {"name": "Iran", "code": "IR", "prefix": "+98", "flag": "\ud83c\uddee\ud83c\uddf7"}, {"name": "Iraq", "code": "IQ", "prefix": "+964", "flag": "\ud83c\uddee\ud83c\uddf6"}, {"name": "Ireland", "code": "IE", "prefix": "+353", "flag": "\ud83c\uddee\ud83c\uddea"}, {"name": "Israel", "code": "IL", "prefix": "+972", "flag": "\ud83c\uddee\ud83c\uddf1"}, {"name": "Italy", "code": "IT", "prefix": "+39", "flag": "\ud83c\uddee\ud83c\uddf9"}, {"name": "Jamaica", "code": "JM", "prefix": "+1", "flag": "\ud83c\uddef\ud83c\uddf2"}, {"name": "Japan", "code": "JP", "prefix": "+81", "flag": "\ud83c\uddef\ud83c\uddf5"}, {"name": "Jordan", "code": "JO", "prefix": "+962", "flag": "\ud83c\uddef\ud83c\uddf4"}, {"name": "Kazakhstan", "code": "KZ", "prefix": "+7", "flag": "\ud83c\uddf0\ud83c\uddff"}, {"name": "Kenya", "code": "KE", "prefix": "+254", "flag": "\ud83c\uddf0\ud83c\uddea"}, {"name": "Kiribati", "code": "KI", "prefix": "+686", "flag": "\ud83c\uddf0\ud83c\uddee"}, {"name": "Kuwait", "code": "KW", "prefix": "+965", "flag": "\ud83c\uddf0\ud83c\uddfc"}, {"name": "Kyrgyzstan", "code": "KG", "prefix": "+996", "flag": "\ud83c\uddf0\ud83c\uddec"}, {"name": "Laos", "code": "LA", "prefix": "+856", "flag": "\ud83c\uddf1\ud83c\udde6"}, {"name": "Latvia", "code": "LV", "prefix": "+371", "flag": "\ud83c\uddf1\ud83c\uddfb"}, {"name": "Lebanon", "code": "LB", "prefix": "+961", "flag": "\ud83c\uddf1\ud83c\udde7"}, {"name": "Lesotho", "code": "LS", "prefix": "+266", "flag": "\ud83c\uddf1\ud83c\uddf8"}, {"name": "Liberia", "code": "LR", "prefix": "+231", "flag": "\ud83c\uddf1\ud83c\uddf7"}, {"name": "Libya", "code": "LY", "prefix": "+218", "flag": "\ud83c\uddf1\ud83c\uddfe"}, {"name": "Liechtenstein", "code": "LI", "prefix": "+423", "flag": "\ud83c\uddf1\ud83c\uddee"}, {"name": "Lithuania", "code": "LT", "prefix": "+370", "flag": "\ud83c\uddf1\ud83c\uddf9"}, {"name": "Luxembourg", "code": "LU", "prefix": "+352", "flag": "\ud83c\uddf1\ud83c\uddfa"}, {"name": "Madagascar", "code": "MG", "prefix": "+261", "flag": "\ud83c\uddf2\ud83c\uddec"}, {"name": "Malawi", "code": "MW", "prefix": "+265", "flag": "\ud83c\uddf2\ud83c\uddfc"}, {"name": "Malaysia", "code": "MY", "prefix": "+60", "flag": "\ud83c\uddf2\ud83c\uddfe"}, {"name": "Maldives", "code": "MV", "prefix": "+960", "flag": "\ud83c\uddf2\ud83c\uddfb"}, {"name": "Mali", "code": "ML", "prefix": "+223", "flag": "\ud83c\uddf2\ud83c\uddf1"}, {"name": "Malta", "code": "MT", "prefix": "+356", "flag": "\ud83c\uddf2\ud83c\uddf9"}, {"name": "Marshall Islands", "code": "MH", "prefix": "+692", "flag": "\ud83c\uddf2\ud83c\udded"}, {"name": "Mauritania", "code": "MR", "prefix": "+222", "flag": "\ud83c\uddf2\ud83c\uddf7"}, {"name": "Mauritius", "code": "MU", "prefix": "+230", "flag": "\ud83c\uddf2\ud83c\uddfa"}, {"name": "Mexico", "code": "MX", "prefix": "+52", "flag": "\ud83c\uddf2\ud83c\uddfd"}, {"name": "Micronesia", "code": "FM", "prefix": "+691", "flag": "\ud83c\uddeb\ud83c\uddf2"}, {"name": "Moldova", "code": "MD", "prefix": "+373", "flag": "\ud83c\uddf2\ud83c\udde9"}, {"name": "Monaco", "code": "MC", "prefix": "+377", "flag": "\ud83c\uddf2\ud83c\udde8"}, {"name": "Mongolia", "code": "MN", "prefix": "+976", "flag": "\ud83c\uddf2\ud83c\uddf3"}, {"name": "Montenegro", "code": "ME", "prefix": "+382", "flag": "\ud83c\uddf2\ud83c\uddea"}, {"name": "Morocco", "code": "MA", "prefix": "+212", "flag": "\ud83c\uddf2\ud83c\udde6"}, {"name": "Mozambique", "code": "MZ", "prefix": "+258", "flag": "\ud83c\uddf2\ud83c\uddff"}, {"name": "Myanmar", "code": "MM", "prefix": "+95", "flag": "\ud83c\uddf2\ud83c\uddf2"}, {"name": "Namibia", "code": "NA", "prefix": "+264", "flag": "\ud83c\uddf3\ud83c\udde6"}, {"name": "Nauru", "code": "NR", "prefix": "+674", "flag": "\ud83c\uddf3\ud83c\uddf7"}, {"name": "Nepal", "code": "NP", "prefix": "+977", "flag": "\ud83c\uddf3\ud83c\uddf5"}, {"name": "Netherlands", "code": "NL", "prefix": "+31", "flag": "\ud83c\uddf3\ud83c\uddf1"}, {"name": "New Zealand", "code": "NZ", "prefix": "+64", "flag": "\ud83c\uddf3\ud83c\uddff"}, {"name": "Nicaragua", "code": "NI", "prefix": "+505", "flag": "\ud83c\uddf3\ud83c\uddee"}, {"name": "Niger", "code": "NE", "prefix": "+227", "flag": "\ud83c\uddf3\ud83c\uddea"}, {"name": "Nigeria", "code": "NG", "prefix": "+234", "flag": "\ud83c\uddf3\ud83c\uddec"}, {"name": "North Korea", "code": "KP", "prefix": "+850", "flag": "\ud83c\uddf0\ud83c\uddf5"}, {"name": "North Macedonia", "code": "MK", "prefix": "+389", "flag": "\ud83c\uddf2\ud83c\uddf0"}, {"name": "Norway", "code": "NO", "prefix": "+47", "flag": "\ud83c\uddf3\ud83c\uddf4"}, {"name": "Oman", "code": "OM", "prefix": "+968", "flag": "\ud83c\uddf4\ud83c\uddf2"}, {"name": "Pakistan", "code": "PK", "prefix": "+92", "flag": "\ud83c\uddf5\ud83c\uddf0"}, {"name": "Palau", "code": "PW", "prefix": "+680", "flag": "\ud83c\uddf5\ud83c\uddfc"}, {"name": "Palestine", "code": "PS", "prefix": "+970", "flag": "\ud83c\uddf5\ud83c\uddf8"}, {"name": "Panama", "code": "PA", "prefix": "+507", "flag": "\ud83c\uddf5\ud83c\udde6"}, {"name": "Papua New Guinea", "code": "PG", "prefix": "+675", "flag": "\ud83c\uddf5\ud83c\uddec"}, {"name": "Paraguay", "code": "PY", "prefix": "+595", "flag": "\ud83c\uddf5\ud83c\uddfe"}, {"name": "Peru", "code": "PE", "prefix": "+51", "flag": "\ud83c\uddf5\ud83c\uddea"}, {"name": "Philippines", "code": "PH", "prefix": "+63", "flag": "\ud83c\uddf5\ud83c\udded"}, {"name": "Poland", "code": "PL", "prefix": "+48", "flag": "\ud83c\uddf5\ud83c\uddf1"}, {"name": "Portugal", "code": "PT", "prefix": "+351", "flag": "\ud83c\uddf5\ud83c\uddf9"}, {"name": "Qatar", "code": "QA", "prefix": "+974", "flag": "\ud83c\uddf6\ud83c\udde6"}, {"name": "Romania", "code": "RO", "prefix": "+40", "flag": "\ud83c\uddf7\ud83c\uddf4"}, {"name": "Russia", "code": "RU", "prefix": "+7", "flag": "\ud83c\uddf7\ud83c\uddfa"}, {"name": "Rwanda", "code": "RW", "prefix": "+250", "flag": "\ud83c\uddf7\ud83c\uddfc"}, {"name": "Saint Kitts and Nevis", "code": "KN", "prefix": "+1", "flag": "\ud83c\uddf0\ud83c\uddf3"}, {"name": "Saint Lucia", "code": "LC", "prefix": "+1", "flag": "\ud83c\uddf1\ud83c\udde8"}, {"name": "Saint Vincent and the Grenadines", "code": "VC", "prefix": "+1", "flag": "\ud83c\uddfb\ud83c\udde8"}, {"name": "Samoa", "code": "WS", "prefix": "+685", "flag": "\ud83c\uddfc\ud83c\uddf8"}, {"name": "San Marino", "code": "MC", "prefix": "+377", "flag": "\ud83c\uddf8\ud83c\uddf2"}, {"name": "Sao Tome and Principe", "code": "ST", "prefix": "+239", "flag": "\ud83c\uddf8\ud83c\uddf9"}, {"name": "Saudi Arabia", "code": "SA", "prefix": "+966", "flag": "\ud83c\uddf8\ud83c\udde6"}, {"name": "Senegal", "code": "SN", "prefix": "+221", "flag": "\ud83c\uddf8\ud83c\uddf3"}, {"name": "Serbia", "code": "RS", "prefix": "+381", "flag": "\ud83c\uddf7\ud83c\uddf8"}, {"name": "Seychelles", "code": "SC", "prefix": "+248", "flag": "\ud83c\uddf8\ud83c\udde8"}, {"name": "Sierra Leone", "code": "SL", "prefix": "+232", "flag": "\ud83c\uddf8\ud83c\uddf1"}, {"name": "Singapore", "code": "SG", "prefix": "+65", "flag": "\ud83c\uddf8\ud83c\uddec"}, {"name": "Slovakia", "code": "SK", "prefix": "+421", "flag": "\ud83c\uddf8\ud83c\uddf0"}, {"name": "Slovenia", "code": "SI", "prefix": "+386", "flag": "\ud83c\uddf8\ud83c\uddee"}, {"name": "Solomon Islands", "code": "SB", "prefix": "+677", "flag": "\ud83c\uddf8\ud83c\udde7"}, {"name": "Somalia", "code": "SO", "prefix": "+252", "flag": "\ud83c\uddf8\ud83c\uddf4"}, {"name": "South Africa", "code": "ZA", "prefix": "+27", "flag": "\ud83c\uddff\ud83c\udde6"}, {"name": "South Korea", "code": "KR", "prefix": "+82", "flag": "\ud83c\uddf0\ud83c\uddf7"}, {"name": "South Sudan", "code": "SS", "prefix": "+211", "flag": "\ud83c\uddf8\ud83c\uddf8"}, {"name": "Spain", "code": "ES", "prefix": "+34", "flag": "\ud83c\uddea\ud83c\uddf8"}, {"name": "Sri Lanka", "code": "LK", "prefix": "+94", "flag": "\ud83c\uddf1\ud83c\uddf0"}, {"name": "Sudan", "code": "SD", "prefix": "+249", "flag": "\ud83c\uddf8\ud83c\udde9"}, {"name": "Suriname", "code": "SR", "prefix": "+597", "flag": "\ud83c\uddf8\ud83c\uddf7"}, {"name": "Sweden", "code": "SE", "prefix": "+46", "flag": "\ud83c\uddf8\ud83c\uddea"}, {"name": "Switzerland", "code": "CH", "prefix": "+41", "flag": "\ud83c\udde8\ud83c\udded"}, {"name": "Syria", "code": "SY", "prefix": "+963", "flag": "\ud83c\uddf8\ud83c\uddfe"}, {"name": "Taiwan", "code": "TW", "prefix": "+886", "flag": "\ud83c\uddf9\ud83c\uddfc"}, {"name": "Tajikistan", "code": "TJ", "prefix": "+992", "flag": "\ud83c\uddf9\ud83c\uddef"}, {"name": "Tanzania", "code": "TZ", "prefix": "+255", "flag": "\ud83c\uddf9\ud83c\uddff"}, {"name": "Thailand", "code": "TH", "prefix": "+66", "flag": "\ud83c\uddf9\ud83c\udded"}, {"name": "Timor-Leste", "code": "TL", "prefix": "+670", "flag": "\ud83c\uddf9\ud83c\uddf1"}, {"name": "Togo", "code": "TG", "prefix": "+228", "flag": "\ud83c\uddf9\ud83c\uddec"}, {"name": "Tonga", "code": "TO", "prefix": "+676", "flag": "\ud83c\uddf9\ud83c\uddf4"}, {"name": "Trinidad and Tobago", "code": "TT", "prefix": "+1", "flag": "\ud83c\uddf9\ud83c\uddf9"}, {"name": "Tunisia", "code": "TN", "prefix": "+216", "flag": "\ud83c\uddf9\ud83c\uddf3"}, {"name": "Turkey", "code": "TR", "prefix": "+90", "flag": "\ud83c\uddf9\ud83c\uddf7"}, {"name": "Turkmenistan", "code": "TM", "prefix": "+993", "flag": "\ud83c\uddf9\ud83c\uddf2"}, {"name": "Tuvalu", "code": "TV", "prefix": "+688", "flag": "\ud83c\uddf9\ud83c\uddfb"}, {"name": "Uganda", "code": "UG", "prefix": "+256", "flag": "\ud83c\uddfa\ud83c\uddec"}, {"name": "Ukraine", "code": "UA", "prefix": "+380", "flag": "\ud83c\uddfa\ud83c\udde6"}, {"name": "United Arab Emirates", "code": "AE", "prefix": "+971", "flag": "\ud83c\udde6\ud83c\uddea"}, {"name": "United Kingdom", "code": "GB", "prefix": "+44", "flag": "\ud83c\uddec\ud83c\udde7"}, {"name": "United States", "code": "US", "prefix": "+1", "flag": "\ud83c\uddfa\ud83c\uddf8"}, {"name": "Uruguay", "code": "UY", "prefix": "+598", "flag": "\ud83c\uddfa\ud83c\uddfe"}, {"name": "Uzbekistan", "code": "UZ", "prefix": "+998", "flag": "\ud83c\uddfa\ud83c\uddff"}, {"name": "Vanuatu", "code": "VU", "prefix": "+678", "flag": "\ud83c\uddfb\ud83c\uddfa"}, {"name": "Vatican City", "code": "VA", "prefix": "+379", "flag": "\ud83c\uddfb\ud83c\udde6"}, {"name": "Venezuela", "code": "VE", "prefix": "+58", "flag": "\ud83c\uddfb\ud83c\uddea"}, {"name": "Vietnam", "code": "VN", "prefix": "+84", "flag": "\ud83c\uddfb\ud83c\uddf3"}, {"name": "Yemen", "code": "YE", "prefix": "+967", "flag": "\ud83c\uddfe\ud83c\uddea"}, {"name": "Zambia", "code": "ZM", "prefix": "+260", "flag": "\ud83c\uddff\ud83c\uddf2"}, {"name": "Zimbabwe", "code": "ZW", "prefix": "+263", "flag": "\ud83c\uddff\ud83c\uddfc"}];
+                    
+                    let newHtml = '';
+                    allCountries.forEach((c, index) => {
+                        const dbMatch = data.find(x => x.country && (x.country.toLowerCase().includes(c.name.toLowerCase()) || x.country.includes(c.flag)));
+                        const count = dbMatch ? dbMatch.count : 0;
+                        
+                        const stockLevel = count > 50 ? 'HIGH STOCK' : (count > 10 ? 'MED STOCK' : (count > 0 ? 'LOW STOCK' : 'OUT OF STOCK'));
+                        const stockColor = count > 50 ? 'text-neon-green border-neon-green/40' : (count > 10 ? 'text-accent border-accent/40' : (count > 0 ? 'text-destructive border-destructive/40' : 'text-muted-foreground border-border'));
                         const activeClass = index === 0 ? 'border-primary/40 bg-primary/5' : 'hover:border-border/80 transition-colors';
                         
-                        if (index === 0) this.currentCountry = { name: item.country, prefix: '' };
+                        if (index === 0) this.currentCountry = { name: c.name, prefix: c.prefix };
 
-                        html += `
-                        <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer ${activeClass}" onclick="ProvisioningManager.selectCountry(this, '${item.country}', '')">
-                            <span class="font-body text-sm font-bold flex-1">${item.country}</span>
-                            <span class="font-mono text-[9px] ${stockColor} border px-2 py-1 rounded">${stockLevel} (${item.count})</span>
+                        newHtml += `
+                        <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer ${activeClass}" onclick="ProvisioningManager.selectCountry(this, '${c.name}', '${c.prefix}')">
+                            <span class="text-xl">${c.flag}</span>
+                            <span class="font-body text-sm font-bold flex-1">${c.name}</span>
+                            <span class="font-mono text-[9px] ${stockColor} border px-2 py-1 rounded">${stockLevel} (${count})</span>
                         </div>`;
                     });
-                    list.innerHTML = html;
+                    list.innerHTML = newHtml;
+
                 } catch (e) {
                     document.getElementById('dynamic-country-list').innerHTML = '<div class="p-8 text-center text-destructive font-mono text-xs">Failed to load stock.</div>';
                 }
