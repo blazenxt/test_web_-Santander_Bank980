@@ -41,14 +41,6 @@ OTP_GROUP_LINK = "https://t.me/+DfUnv_qgZEFkZWU8"
 BOT_NAME       = "Nexa OTP Bot"
 DEV_CONTACT    = "@firstoget"	
 REQUIRED_CHANNELS = []
-DEFAULT_PANELS = []
-"""    {"name": "Nexa Backup",      "link": "https://t.me/nexabackup",                                   "id": "@nexabackup"},
-    {"name": "Nexa OTP",         "link": "https://t.me/+DfUnv_qgZEFkZWU8",                           "id": "@nexaotp"},
-    {"name": "Nexa All Numbers", "link": "https://t.me/nexa_numbers",                                 "id": "@nexa_numbers"},
-]
-
-
-
 DEFAULT_PANELS = {
     "NEXA PANEL": {
         "url":      "http://147.135.212.197/crapi/time/viewstats",
@@ -56,14 +48,6 @@ DEFAULT_PANELS = {
         "records":  20,
         "api_type": "old"        # 🔵 Old API (viewstats)
     },
-    # ── To add a MO API panel, use URL like: ──────────────────
-    # "MY MO PANEL": {
-    #     "url":      "http://137.74.1.203/crapi/reseller/mdr.php",
-    #     "token":    "YOUR_TOKEN_HERE",
-    #     "records":  20,
-    #     "api_type": "mo"       # 🟣 MO API (MOAPI-Purple)
-    # },
-    # ── PS API panel ──────────────────────────────────────────
     "PS PANEL": {
         "url":      "https://pscall.net/restapi/smsreport",
         "token":    "SFRXSj1SS4aEf4h1iJCIhXaRUQ==",
@@ -71,7 +55,6 @@ DEFAULT_PANELS = {
         "api_type": "ps"       # 🟢 PS API (pscall.net)
     },
 }
-"""
 OTP_GROUP_IDS = [-1003902733109]
 
 OTP_FILE      = "otp_store.json"
@@ -1741,7 +1724,7 @@ async def fetchsms_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("❌ Unauthorized!")
         return
     wait    = await update.message.reply_text("🔄 Fetching...")
-    results = fetch_all_panels(limit=5)
+    results = await asyncio.get_running_loop().run_in_executor(None, fetch_all_panels, 5)
     if not results:
         await wait.edit_text("❌ No SMS fetched.")
         return
