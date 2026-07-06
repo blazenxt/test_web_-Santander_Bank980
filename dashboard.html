@@ -260,22 +260,9 @@
 
                     <div class="cyber-card rounded-lg p-4 neon-border space-y-3">
                         <h3 class="font-display text-xs font-bold text-accent tracking-wider">2. SELECT COUNTRY</h3>
-                        <div class="space-y-2">
-                            <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer border border-primary/40 bg-primary/5" onclick="ProvisioningManager.selectCountry(this, '🇺🇸 USA', '+1')">
-                                <span class="text-xl">🇺🇸</span>
-                                <span class="font-body text-sm font-bold flex-1">United States</span>
-                                <span class="font-mono text-[9px] text-neon-green border border-neon-green/40 px-2 py-1 rounded">HIGH STOCK</span>
-                            </div>
-                            <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer hover:border-border/80 transition-colors" onclick="ProvisioningManager.selectCountry(this, '🇬🇧 UK', '+44')">
-                                <span class="text-xl">🇬🇧</span>
-                                <span class="font-body text-sm font-bold flex-1">United Kingdom</span>
-                                <span class="font-mono text-[9px] text-neon-green border border-neon-green/40 px-2 py-1 rounded">HIGH STOCK</span>
-                            </div>
-                            <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer hover:border-border/80 transition-colors" onclick="ProvisioningManager.selectCountry(this, '🇮🇳 India', '+91')">
-                                <span class="text-xl">🇮🇳</span>
-                                <span class="font-body text-sm font-bold flex-1">India</span>
-                                <span class="font-mono text-[9px] text-accent border border-accent/40 px-2 py-1 rounded">MED STOCK</span>
-                            </div>
+                        <div class="space-y-2" id="dynamic-country-list">
+                            <div class="p-8 text-center text-muted-foreground font-mono text-xs"><i class="fa-solid fa-spinner fa-spin"></i> Loading stock...</div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -431,6 +418,7 @@
                 
                 const pageEl = document.getElementById(`page-${pageName}`);
                 if(pageEl) { pageEl.classList.remove('hidden-page'); pageEl.classList.add('active-page'); }
+                if(pageName === 'buy') ProvisioningManager.loadStock();
                 
                 document.querySelectorAll(`[data-page="${pageName}"]`).forEach(n => {
                     if(n.classList.contains('nav-item')) { n.classList.remove('text-muted-foreground'); n.classList.add('bg-muted/50','text-primary'); }
@@ -634,6 +622,37 @@
             static currentCountry = { name: '🇺🇸 USA', prefix: '+1' };
             static myRentals = [];
 
+            
+            static async loadStock() {
+                try {
+                    const data = await APIService.request('/api/numbers');
+                    const list = document.getElementById('dynamic-country-list');
+                    if (!data || data.length === 0) {
+                        list.innerHTML = '<div class="p-8 text-center text-muted-foreground font-mono text-xs">NO STOCK AVAILABLE</div>';
+                        this.currentCountry = null;
+                        return;
+                    }
+                    
+                    let html = '';
+                    data.forEach((item, index) => {
+                        const stockLevel = item.count > 50 ? 'HIGH STOCK' : (item.count > 10 ? 'MED STOCK' : 'LOW STOCK');
+                        const stockColor = item.count > 50 ? 'text-neon-green border-neon-green/40' : (item.count > 10 ? 'text-accent border-accent/40' : 'text-destructive border-destructive/40');
+                        const activeClass = index === 0 ? 'border-primary/40 bg-primary/5' : 'hover:border-border/80 transition-colors';
+                        
+                        if (index === 0) this.currentCountry = { name: item.country, prefix: '' };
+
+                        html += `
+                        <div class="country-opt cyber-card rounded-lg p-3 flex items-center gap-3 cursor-pointer ${activeClass}" onclick="ProvisioningManager.selectCountry(this, '${item.country}', '')">
+                            <span class="font-body text-sm font-bold flex-1">${item.country}</span>
+                            <span class="font-mono text-[9px] ${stockColor} border px-2 py-1 rounded">${stockLevel} (${item.count})</span>
+                        </div>`;
+                    });
+                    list.innerHTML = html;
+                } catch (e) {
+                    document.getElementById('dynamic-country-list').innerHTML = '<div class="p-8 text-center text-destructive font-mono text-xs">Failed to load stock.</div>';
+                }
+            }
+
             static selectService(element, name, price, icon, color) {
                 document.querySelectorAll('.service-opt').forEach(el => el.classList.remove('border-primary/40', 'bg-primary/5'));
                 element.classList.add('border-primary/40', 'bg-primary/5');
@@ -654,7 +673,7 @@
 
                 try {
                     const res = await APIService.request('/api/provision', {
-                        method: 'POST', body: JSON.stringify({ prefix: this.currentCountry.prefix, service: this.currentService.name })
+                        method: 'POST', body: JSON.stringify({ country: this.currentCountry.name, service: this.currentService.name })
                     });
                     
                     const newRental = {

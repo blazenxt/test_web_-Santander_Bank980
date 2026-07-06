@@ -4,6 +4,10 @@
 echo "Starting Flask Dashboard..."
 gunicorn -b 0.0.0.0:${PORT:-8080} dashboard:app &
 
-# Start the Telegram Bot in the foreground
+# Run the Telegram Bot in a while loop so it restarts on crash without killing the container
 echo "Starting Telegram Bot..."
-python app.py
+while true; do
+    python app.py
+    echo "Bot crashed! Restarting in 5 seconds..."
+    sleep 5
+done
