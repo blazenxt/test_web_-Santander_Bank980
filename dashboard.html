@@ -80,38 +80,31 @@
 
             <div class="py-4 px-3 space-y-5 overflow-y-auto h-[calc(100%-80px)]">
                 
+                
                 <div class="space-y-1">
-                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">MAIN MENU</h3>
-                    <button onclick="Navigation.showPage('dashboard')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="dashboard"><i class="fa-solid fa-chart-pie w-4"></i> Dashboard</button>
-                    <button onclick="Navigation.showPage('otp')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="otp"><i class="fa-solid fa-satellite-dish w-4"></i> Live OTP Feed</button>
-                    <button onclick="Navigation.showPage('timeline')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="timeline"><i class="fa-solid fa-clock-rotate-left w-4"></i> Timeline</button>
-                    <button onclick="Navigation.showPage('search')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="search"><i class="fa-solid fa-magnifying-glass w-4"></i> OTP Search</button>
-                    <button onclick="Navigation.showPage('notifications')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="notifications"><i class="fa-solid fa-bell w-4"></i> Notifications</button>
+                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">PUBLIC</h3>
+                    <button onclick="Navigation.showPage('dashboard')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="dashboard"><i class="fa-solid fa-satellite-dish w-4"></i> Live OTPs</button>
+                    <button onclick="Navigation.showPage('numbers')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="numbers"><i class="fa-solid fa-sim-card w-4"></i> Numbers</button>
+                    <button onclick="Navigation.showPage('dashboard')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="dashboard"><i class="fa-solid fa-chart-pie w-4"></i> Stats</button>
                     <button onclick="Navigation.showPage('about')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="about"><i class="fa-solid fa-circle-info w-4"></i> About</button>
+                    <button onclick="Navigation.showPage('connect')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="connect"><i class="fa-solid fa-plug w-4"></i> Connect Bot</button>
+                </div>
+                
+                <div class="space-y-1">
+                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">TOOLS</h3>
+                    <button onclick="Navigation.showPage('timeline')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="timeline"><i class="fa-solid fa-clock-rotate-left w-4"></i> Timeline</button>
+                    <button onclick="Navigation.showPage('logs')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="logs"><i class="fa-solid fa-terminal w-4"></i> Live Logs</button>
+                    <button onclick="Navigation.showPage('notifications')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="notifications"><i class="fa-solid fa-bell w-4"></i> Notifications</button>
                 </div>
 
                 <div class="space-y-1">
-                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">CONSUMER PANEL</h3>
+                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">ENTERPRISE API</h3>
                     <button onclick="Navigation.showPage('buy')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="buy"><i class="fa-solid fa-cart-shopping w-4"></i> Rent Number</button>
-                    <button onclick="Navigation.showPage('myotps')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="myotps"><i class="fa-solid fa-sim-card w-4"></i> My Rentals</button>
-                    
-                <div class="space-y-1">
-                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">FINANCE & API</h3>
+                    <button onclick="Navigation.showPage('myotps')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="myotps"><i class="fa-solid fa-clock-rotate-left w-4"></i> My Rentals</button>
                     <button onclick="Navigation.showPage('wallet')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="wallet"><i class="fa-solid fa-wallet w-4"></i> Wallet / Billing</button>
-                    <button onclick="Navigation.showPage('api')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="api"><i class="fa-solid fa-code w-4"></i> Connect / API</button>
+                    <button onclick="Navigation.showPage('api')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="api"><i class="fa-solid fa-code w-4"></i> API Docs</button>
                 </div>
 
-
-                <div class="space-y-1 admin-only" style="display:none;">
-                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">ENTERPRISE ADMIN</h3>
-                    <button onclick="Navigation.showPage('panels')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="panels"><i class="fa-solid fa-server w-4"></i> Integrations</button>
-                    <button onclick="Navigation.showPage('users')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="users"><i class="fa-solid fa-users w-4"></i> Users DB</button>
-                    <button onclick="Navigation.showPage('groups')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="groups"><i class="fa-solid fa-route w-4"></i> Routing</button>
-                    <button onclick="Navigation.showPage('broadcast')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="broadcast"><i class="fa-solid fa-satellite-dish w-4"></i> Broadcast</button>
-                    <button onclick="Navigation.showPage('ban')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="ban"><i class="fa-solid fa-gavel w-4"></i> Ban Manager</button>
-                    <button onclick="Navigation.showPage('sysinfo')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="sysinfo"><i class="fa-solid fa-microchip w-4"></i> Sys Info</button>
-                </div>
-            </div>
 
             <div class="mt-auto border-t border-border p-4">
                 <button onclick="AuthManager.logout()" class="admin-only flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10" style="display:none;"><i class="fa-solid fa-right-from-bracket w-4"></i> Disconnect</button>
@@ -133,7 +126,7 @@
                 <div class="container flex h-14 items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-satellite-dish text-primary"></i>
-                        <span class="font-display font-bold text-sm tracking-widest text-foreground" id="topbar-title">DASHBOARD</span>
+                        <span class="font-display font-bold text-sm tracking-widest text-foreground" id="topbar-title">LIVE OTPS</span>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="flex items-center gap-2 rounded-md border border-border px-3 py-1.5 font-mono text-[10px] text-muted-foreground hover:text-neon-green hover:border-neon-green/40 transition-colors">
