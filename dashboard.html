@@ -7,7 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/infinity.css">
+    <link rel="stylesheet" href="https://infinity-sms.vercel.app/assets/index-CrG8J6dk.css">
 
     <style>
         /* Hide scrollbars for cleaner look */
@@ -36,7 +36,24 @@
         .toast.success { border-color: hsla(var(--neon-green), 0.5); }
         .toast.error { border-color: hsla(var(--neon-red), 0.5); }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+    
+        .cards-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (max-width: 767px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
     </style>
+    <script type="module" crossorigin src="https://infinity-sms.vercel.app/assets/index-BenhWsLO.js"></script>
 </head>
 <body class="bg-background text-foreground font-body">
 
@@ -105,6 +122,8 @@
                     <button onclick="Navigation.showPage('api')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="api"><i class="fa-solid fa-code w-4"></i> API Docs</button>
                 </div>
 
+
+            </div>
 
             <div class="mt-auto border-t border-border p-4">
                 <button onclick="AuthManager.logout()" class="admin-only flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10" style="display:none;"><i class="fa-solid fa-right-from-bracket w-4"></i> Disconnect</button>
@@ -1103,7 +1122,7 @@
         }
         setInterval(() => ProvisioningManager.renderRentals(), 1000);
 
-        document.addEventListener('DOMContentLoaded', () => AuthManager.init(); ConsumerManager.init(););
+        document.addEventListener('DOMContentLoaded', () => { AuthManager.init(); ConsumerManager.init(); });
     </script>
 
 
