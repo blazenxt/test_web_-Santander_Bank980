@@ -9184,24 +9184,22 @@
                 } catch(e) {}
             }
 
-            static updateMiniTerminal() {
+            static async updateMiniTerminal() {
                 const term = document.getElementById('mini-terminal');
                 if(!term) return;
-                const lines = [
-                    "> [SYS] Intercepting GSM packets on port 443...",
-                    "> [API] Authenticating gateway token [OK]",
-                    "> [NET] Handshake with upstream provider successful.",
-                    "> [OTP] Captured incoming SMS payload.",
-                    "> [SEC] Encrypting payload before transmission.",
-                    "> [SYS] Memory garbage collection triggered.",
-                    "> [DB] Synced stock inventory.",
-                    "> [OTP] Polling API panels for new messages..."
-                ];
-                const lineEl = document.createElement('div');
-                lineEl.innerHTML = `<span class="text-muted-foreground">[${new Date().toISOString().substring(11, 19)}]</span> ${lines[Math.floor(Math.random() * lines.length)]}`;
-                term.appendChild(lineEl);
-                if (term.children.length > 8) term.removeChild(term.firstChild);
-                term.scrollTop = term.scrollHeight;
+                try {
+                    const res = await APIService.request('/api/logs?lines=8');
+                    if (res && res.lines && res.lines.length > 0) {
+                        term.innerHTML = res.lines.map(line => {
+                            const match = line.match(/^([\d\-]+\s[\d:]+)\s*-\s*[^_]+__\s*-\s*[A-Z]+\s*-\s*(.*)/);
+                            if(match) {
+                                return `<div><span class="text-muted-foreground">[${match[1].substring(11)}]</span> ${match[2]}</div>`;
+                            }
+                            return `<div><span class="text-muted-foreground">[SYS]</span> ${line}</div>`;
+                        }).join('');
+                        term.scrollTop = term.scrollHeight;
+                    }
+                } catch(e) {}
             }
 
             static startDaemon() {
