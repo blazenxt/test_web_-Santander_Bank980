@@ -5,6 +5,8 @@
 import json, os, sqlite3, time, hashlib, hmac, re, sys
 from datetime import datetime, timedelta
 from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
+import uuid
 from flask import Flask, request, jsonify, send_from_directory, abort
 from flask_cors import CORS
 
@@ -498,15 +500,127 @@ def search_otp():
         db.close()
 
 
-# ── PROVISIONING API ──────────────────────────────────────────
-@app.route("/api/provision", methods=["POST"])
-def provision_number():
+
+# ── CONSUMER AUTH & WALLET ──────────────────────────────────────────
+@app.route("/api/consumer/register", methods=["POST"])
+def consumer_register():
     data = request.json or {}
-    country_name = data.get("country", "")
-    service = data.get("service", "Unknown")
+    username = data.get("username", "").strip()
+    password = data.get("password", "")
+    if not username or not password:
+        return jsonify({"error": "Username and password required"}), 400
+        
+    db = get_db()
+    try:
+        existing = db.execute("SELECT id FROM consumer_users WHERE username=?", (username,)).fetchone()
+        if existing:
+            return jsonify({"error": "Username already exists"}), 409
+            
+        hashed = generate_password_hash(password)
+        api_key = "nxt_live_" + uuid.uuid4().hex
+        db.execute("INSERT INTO consumer_users (username, password_hash, balance, api_key) VALUES (?, ?, 0.0, ?)", 
+                   (username, hashed, api_key))
+        db.commit()
+        return jsonify({"ok": True, "message": "Account created successfully"})
+    finally:
+        db.close()
+
+@app.route("/api/consumer/login", methods=["POST"])
+def consumer_login():
+    data = request.json or {}
+    username = data.get("username", "").strip()
+    password = data.get("password", "")
     
     db = get_db()
     try:
+        user = db.execute("SELECT * FROM consumer_users WHERE username=?", (username,)).fetchone()
+        if user and check_password_hash(user["password_hash"], password):
+            token = make_token({"uid": user["id"], "username": username, "role": "consumer", "api_key": user["api_key"]})
+            return jsonify({
+                "token": token, 
+                "username": username,
+                "balance": user["balance"],
+                "api_key": user["api_key"]
+            })
+        return jsonify({"error": "Invalid credentials"}), 401
+    finally:
+        db.close()
+
+@app.route("/api/consumer/me", methods=["GET"])
+def consumer_me():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    payload = verify_token(token)
+    if not payload or payload.get("role") != "consumer":
+        return jsonify({"error": "Unauthorized"}), 401
+        
+    db = get_db()
+    try:
+        user = db.execute("SELECT balance, api_key FROM consumer_users WHERE id=?", (payload["uid"],)).fetchone()
+        if user:
+            return jsonify({"balance": user["balance"], "api_key": user["api_key"]})
+        return jsonify({"error": "User not found"}), 404
+    finally:
+        db.close()
+
+@app.route("/api/wallet/deposit", methods=["POST"])
+def wallet_deposit():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    payload = verify_token(token)
+    if not payload or payload.get("role") != "consumer":
+        return jsonify({"error": "Unauthorized"}), 401
+        
+    data = request.json or {}
+    amount = float(data.get("amount", 0))
+    if amount <= 0:
+        return jsonify({"error": "Invalid amount"}), 400
+        
+    db = get_db()
+    try:
+        # Simulate crypto deposit
+        txid = "TX-" + uuid.uuid4().hex[:8].upper()
+        db.execute("INSERT INTO transactions (user_id, type, amount, status) VALUES (?, ?, ?, ?)",
+                   (payload["uid"], "Crypto Deposit (BTC)", amount, "COMPLETED"))
+        db.execute("UPDATE consumer_users SET balance = balance + ? WHERE id=?", (amount, payload["uid"]))
+        db.commit()
+        return jsonify({"ok": True, "txid": txid, "amount": amount})
+    finally:
+        db.close()
+
+@app.route("/api/wallet/history", methods=["GET"])
+def wallet_history():
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    payload = verify_token(token)
+    if not payload or payload.get("role") != "consumer":
+        return jsonify({"error": "Unauthorized"}), 401
+        
+    db = get_db()
+    try:
+        rows = db.execute("SELECT * FROM transactions WHERE user_id=? ORDER BY created_at DESC LIMIT 50", (payload["uid"],)).fetchall()
+        return jsonify([dict(r) for r in rows])
+    finally:
+        db.close()
+
+# ── PROVISIONING API ──────────────────────────────────────────
+@app.route("/api/provision", methods=["POST"])
+def provision_number():
+    # Require Consumer Auth
+    token = request.headers.get("Authorization", "").replace("Bearer ", "")
+    payload = verify_token(token)
+    if not payload or payload.get("role") != "consumer":
+        return jsonify({"error": "Please login to rent a number."}), 401
+        
+    data = request.json or {}
+    country_name = data.get("country", "")
+    service = data.get("service", "Unknown")
+    price = float(data.get("price", 0.85))
+    
+    db = get_db()
+    try:
+        # Check Balance
+        user = db.execute("SELECT balance FROM consumer_users WHERE id=?", (payload["uid"],)).fetchone()
+        if not user or user["balance"] < price:
+            return jsonify({"error": "Insufficient balance. Please deposit funds."}), 402
+            
         if country_name:
             row = db.execute("SELECT id, phone FROM numbers WHERE country LIKE ? ORDER BY RANDOM() LIMIT 1", (f"%{country_name}%",)).fetchone()
         else:
@@ -517,10 +631,20 @@ def provision_number():
             if not phone.startswith("+"):
                 phone = "+" + phone
         else:
-            # Fallback to a mock number if DB is empty
             import random
             phone = f"+{random.randint(10000000000, 99999999999)}"
-        return jsonify({"ok": True, "number": phone})
+            
+        # Deduct balance and record transaction
+        db.execute("UPDATE consumer_users SET balance = balance - ? WHERE id=?", (price, payload["uid"]))
+        db.execute("INSERT INTO transactions (user_id, type, amount, status) VALUES (?, ?, ?, ?)",
+                   (payload["uid"], f"Number Purchase ({service})", -price, "COMPLETED"))
+        # Record rental
+        expires = (datetime.now() + timedelta(minutes=15)).isoformat()
+        db.execute("INSERT INTO rentals (user_id, phone, service, expires_at) VALUES (?, ?, ?, ?)",
+                   (payload["uid"], phone, service, expires))
+        db.commit()
+        
+        return jsonify({"ok": True, "number": phone, "new_balance": user["balance"] - price})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:

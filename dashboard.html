@@ -94,6 +94,10 @@
                     <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">CONSUMER PANEL</h3>
                     <button onclick="Navigation.showPage('buy')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="buy"><i class="fa-solid fa-cart-shopping w-4"></i> Rent Number</button>
                     <button onclick="Navigation.showPage('myotps')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="myotps"><i class="fa-solid fa-sim-card w-4"></i> My Rentals</button>
+                    
+                <div class="space-y-1">
+                    <h3 class="font-display text-[9px] font-bold tracking-widest text-muted-foreground px-4 mb-2 uppercase">FINANCE & API</h3>
+                    <button onclick="Navigation.showPage('wallet')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="wallet"><i class="fa-solid fa-wallet w-4"></i> Wallet / Billing</button>
                     <button onclick="Navigation.showPage('api')" class="nav-item flex items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted/50 w-full text-left" data-page="api"><i class="fa-solid fa-code w-4"></i> Connect / API</button>
                 </div>
 
@@ -111,6 +115,13 @@
 
             <div class="mt-auto border-t border-border p-4">
                 <button onclick="AuthManager.logout()" class="admin-only flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10" style="display:none;"><i class="fa-solid fa-right-from-bracket w-4"></i> Disconnect</button>
+                
+                <button onclick="ConsumerManager.openAuth()" id="sidebar-client-login" class="flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-muted/50"><i class="fa-solid fa-user w-4"></i> Client Login</button>
+                <div id="sidebar-client-info" style="display:none;" class="px-4 py-2 bg-muted/20 rounded-md mb-2">
+                    <div class="font-mono text-xs text-muted-foreground">Balance</div>
+                    <div class="font-display text-lg text-neon-green font-bold" id="sidebar-balance">$0.00</div>
+                </div>
+
                 <button onclick="Navigation.showPage('admin')" class="public-only flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted/50"><i class="fa-solid fa-lock w-4"></i> Admin Login</button>
             </div>
         </aside>
@@ -236,6 +247,42 @@
             </div>
 
             
+        
+        <!-- WALLET PAGE -->
+        <div id="page-wallet" class="page-container container py-6 space-y-6 hidden-page">
+            <div class="space-y-2">
+                <h1 class="font-display text-2xl font-bold tracking-wider text-neon-green neon-glow">WALLET & BILLING</h1>
+                <p class="font-body text-sm text-muted-foreground">Manage your funds and view transaction history.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="cyber-card rounded-lg p-6 border border-neon-green/40 bg-neon-green/5 text-center flex flex-col justify-center">
+                    <p class="font-display text-sm text-neon-green font-bold tracking-wider mb-2">AVAILABLE BALANCE</p>
+                    <p class="font-display text-5xl font-bold text-foreground mb-6" id="wallet-balance-big">$0.00</p>
+                    <button onclick="ConsumerManager.deposit()" class="inline-flex items-center justify-center rounded-md bg-neon-green text-black font-bold h-12 hover:bg-neon-green/80 mx-auto w-2/3">
+                        <i class="fa-brands fa-bitcoin mr-2"></i> DEPOSIT CRYPTO
+                    </button>
+                </div>
+                <div class="cyber-card rounded-lg p-6 neon-border space-y-4">
+                    <h3 class="font-display text-sm font-bold text-accent tracking-wider"><i class="fa-solid fa-bolt"></i> QUICK DEPOSIT</h3>
+                    <p class="font-body text-sm text-muted-foreground">Send BTC to the address below. Funds are credited after 1 confirmation.</p>
+                    <div class="p-4 bg-background border border-border rounded-md text-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" class="mx-auto mb-3 rounded" style="filter: invert(1);">
+                        <code class="text-xs text-primary break-all">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cyber-card rounded-lg overflow-hidden border border-border">
+                <div class="flex items-center justify-between border-b border-border bg-muted/20 px-4 py-3">
+                    <div class="font-display text-xs font-bold tracking-wider text-muted-foreground">TRANSACTION HISTORY</div>
+                </div>
+                <div id="wallet-history-list" class="divide-y divide-border">
+                    <div class="p-8 text-center text-muted-foreground font-mono text-xs">No transactions found.</div>
+                </div>
+            </div>
+        </div>
+
         <!-- PAGE: TIMELINE -->
         <div id="page-timeline" class="page-container container py-6 space-y-5 hidden-page">
             <div>
@@ -319,7 +366,7 @@
                 <h3 class="font-display text-sm font-bold text-accent tracking-wider mb-4">AUTHENTICATION</h3>
                 <p class="font-body text-sm text-muted-foreground mb-4">All API requests require an API key passed in the <code>Authorization</code> header.</p>
                 <div class="rounded-md border border-border bg-background p-4 font-mono text-[11px] text-neon-green mb-6 overflow-x-auto">
-                    Authorization: Bearer YOUR_API_KEY
+                    <span id="api-key-box">Authorization: Bearer YOUR_API_KEY</span>
                 </div>
 
                 <h3 class="font-display text-sm font-bold text-accent tracking-wider mb-4 border-t border-border pt-4">ENDPOINTS</h3>
@@ -428,6 +475,13 @@
                     <i class="fa-solid fa-clock-rotate-left h-5 w-5"></i>
                     <span class="text-[10px] font-display font-bold">Mine</span>
                 </button>
+                
+                <button onclick="ConsumerManager.openAuth()" id="sidebar-client-login" class="flex w-full items-center gap-3 rounded-md px-4 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-muted/50"><i class="fa-solid fa-user w-4"></i> Client Login</button>
+                <div id="sidebar-client-info" style="display:none;" class="px-4 py-2 bg-muted/20 rounded-md mb-2">
+                    <div class="font-mono text-xs text-muted-foreground">Balance</div>
+                    <div class="font-display text-lg text-neon-green font-bold" id="sidebar-balance">$0.00</div>
+                </div>
+
                 <button onclick="Navigation.showPage('admin')" class="nav-item-mob flex flex-col items-center justify-center gap-1 w-16 h-full text-muted-foreground hover:text-foreground transition-colors" data-page="admin">
                     <i class="fa-solid fa-lock h-5 w-5"></i>
                     <span class="text-[10px] font-display font-bold">Admin</span>
@@ -444,6 +498,7 @@
         
         const STATE = {
             token: localStorage.getItem('nxt_token') || '',
+            role: localStorage.getItem('nxt_role') || '',
             currentPage: 'dashboard',
             timerId: null,
             lastOTPCount: 0,
@@ -482,6 +537,119 @@
             }
             static success(m) { this.show(m, 'success'); }
             static error(m) { this.show(m, 'error'); }
+        }
+
+        
+        class ConsumerManager {
+            static async init() {
+                if (STATE.token && STATE.role === 'consumer') {
+                    await this.fetchMe();
+                }
+            }
+
+            static openAuth() {
+                document.getElementById('consumer-auth-modal').style.display = 'flex';
+                document.getElementById('consumer-auth-err').innerText = '';
+            }
+
+            static async login() {
+                const u = document.getElementById('consumer-user').value;
+                const p = document.getElementById('consumer-pass').value;
+                if(!u || !p) return;
+                try {
+                    const res = await APIService.request('/api/consumer/login', {
+                        method: 'POST', body: JSON.stringify({username: u, password: p})
+                    });
+                    STATE.token = res.token;
+                    STATE.role = 'consumer';
+                    localStorage.setItem('nxt_token', res.token);
+                    localStorage.setItem('nxt_role', 'consumer');
+                    document.getElementById('consumer-auth-modal').style.display = 'none';
+                    NotificationManager.success('Logged in successfully');
+                    this.updateUI(res.balance, res.api_key);
+                    this.loadHistory();
+                } catch(e) {
+                    document.getElementById('consumer-auth-err').innerText = (e.data && e.data.error) || 'Login failed';
+                }
+            }
+
+            static async register() {
+                const u = document.getElementById('consumer-user').value;
+                const p = document.getElementById('consumer-pass').value;
+                if(!u || !p) return;
+                try {
+                    await APIService.request('/api/consumer/register', {
+                        method: 'POST', body: JSON.stringify({username: u, password: p})
+                    });
+                    NotificationManager.success('Account created! Logging in...');
+                    await this.login();
+                } catch(e) {
+                    document.getElementById('consumer-auth-err').innerText = (e.data && e.data.error) || 'Registration failed';
+                }
+            }
+
+            static async fetchMe() {
+                try {
+                    const res = await APIService.request('/api/consumer/me');
+                    this.updateUI(res.balance, res.api_key);
+                    if(STATE.currentPage === 'wallet') this.loadHistory();
+                } catch(e) {
+                    STATE.token = ''; STATE.role = '';
+                    localStorage.removeItem('nxt_token'); localStorage.removeItem('nxt_role');
+                    this.updateUI(0, '');
+                }
+            }
+
+            static updateUI(balance, apiKey) {
+                const balStr = '$' + parseFloat(balance).toFixed(2);
+                document.getElementById('sidebar-balance').innerText = balStr;
+                const bigBal = document.getElementById('wallet-balance-big');
+                if(bigBal) bigBal.innerText = balStr;
+                
+                const apiBox = document.getElementById('api-key-box');
+                if(apiBox && apiKey) apiBox.innerText = 'Authorization: Bearer ' + apiKey;
+
+                if (STATE.token && STATE.role === 'consumer') {
+                    document.getElementById('sidebar-client-login').style.display = 'none';
+                    document.getElementById('sidebar-client-info').style.display = 'block';
+                } else {
+                    document.getElementById('sidebar-client-login').style.display = 'flex';
+                    document.getElementById('sidebar-client-info').style.display = 'none';
+                }
+            }
+
+            static async deposit() {
+                try {
+                    const res = await APIService.request('/api/wallet/deposit', {
+                        method: 'POST', body: JSON.stringify({amount: 50.00}) // Mock $50 deposit
+                    });
+                    NotificationManager.success(`Successfully deposited $50.00 (TX: ${res.txid})`);
+                    this.fetchMe();
+                    this.loadHistory();
+                } catch(e) {
+                    NotificationManager.error('Deposit failed. Please login.');
+                }
+            }
+
+            static async loadHistory() {
+                if(!STATE.token || STATE.role !== 'consumer') return;
+                try {
+                    const rows = await APIService.request('/api/wallet/history');
+                    const el = document.getElementById('wallet-history-list');
+                    if(!rows.length) {
+                        el.innerHTML = '<div class="p-8 text-center text-muted-foreground font-mono text-xs">No transactions found.</div>';
+                        return;
+                    }
+                    el.innerHTML = rows.map(r => `
+                        <div class="flex items-center justify-between p-3 hover:bg-muted/20">
+                            <div>
+                                <div class="font-mono text-xs text-primary">${r.type}</div>
+                                <div class="font-mono text-[9px] text-muted-foreground">${r.created_at.substring(0,16)} • ${r.status}</div>
+                            </div>
+                            <div class="font-mono text-sm font-bold ${r.amount > 0 ? 'text-neon-green' : 'text-destructive'}">${r.amount > 0 ? '+' : ''}$${Math.abs(r.amount).toFixed(2)}</div>
+                        </div>`).join('');
+                } catch(e) {}
+            }
         }
 
         class APIService {
@@ -557,7 +725,7 @@
 
             static launchApp() {
                 let path = window.location.pathname.replace('/', '') || 'dashboard';
-                const validPages = ['dashboard', 'otp', 'search', 'buy', 'myotps', 'panels', 'users', 'groups', 'sysinfo', 'ban', 'broadcast', 'timeline', 'notifications', 'about', 'api'];
+                const validPages = ['dashboard', 'otp', 'search', 'buy', 'myotps', 'wallet', 'panels', 'users', 'groups', 'sysinfo', 'ban', 'broadcast', 'timeline', 'notifications', 'about', 'api'];
                 if (!validPages.includes(path) && path !== 'admin') path = 'dashboard';
                 
                 this.showPage(path, false);
@@ -859,7 +1027,7 @@
 
                 try {
                     const res = await APIService.request('/api/provision', {
-                        method: 'POST', body: JSON.stringify({ country: this.currentCountry.name, service: this.currentService.name })
+                        method: 'POST', body: JSON.stringify({ country: this.currentCountry.name, service: this.currentService.name, price: this.currentService.price })
                     });
                     
                     const newRental = {
@@ -942,7 +1110,7 @@
         }
         setInterval(() => ProvisioningManager.renderRentals(), 1000);
 
-        document.addEventListener('DOMContentLoaded', () => AuthManager.init());
+        document.addEventListener('DOMContentLoaded', () => AuthManager.init(); ConsumerManager.init(););
     </script>
 
 

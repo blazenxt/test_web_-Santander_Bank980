@@ -243,6 +243,18 @@ def init_db():
     c.execute("""CREATE TABLE IF NOT EXISTS tg_users
                  (user_id INTEGER PRIMARY KEY, first_seen TEXT,
                   last_seen TEXT, total_commands INTEGER DEFAULT 0)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS consumer_users
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  username TEXT UNIQUE, password_hash TEXT, 
+                  balance REAL DEFAULT 0.0, api_key TEXT)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS rentals
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  user_id INTEGER, phone TEXT, service TEXT, 
+                  status TEXT DEFAULT 'active', expires_at TIMESTAMP)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS transactions
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  user_id INTEGER, type TEXT, amount REAL, 
+                  status TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
     c.execute("""CREATE TABLE IF NOT EXISTS otp_history
                  (id INTEGER PRIMARY KEY, number TEXT, service TEXT,
                   otp TEXT, source TEXT,
