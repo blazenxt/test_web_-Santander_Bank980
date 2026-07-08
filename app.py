@@ -235,7 +235,9 @@ OTP_LOG_MAX = 200
 #  SQLITE DATABASE
 # ═══════════════════════════════════════════════════════════════
 def init_db():
-    conn = sqlite3.connect(DB_FILE, check_same_thread=False)
+    conn = sqlite3.connect(DB_FILE, check_same_thread=False, timeout=15)
+    conn.execute('PRAGMA journal_mode=WAL;')
+    conn.execute('PRAGMA synchronous=NORMAL;')
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS numbers
                  (id INTEGER PRIMARY KEY, country TEXT, phone TEXT,

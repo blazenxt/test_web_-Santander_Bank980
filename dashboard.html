@@ -506,6 +506,7 @@
     <div id="toast-container" class="toast-container"></div>
 
     <script>
+                const escapeHTML = str => String(str || '').replace(/[&<>'"]/g, match => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[match]));
         const CONFIG = { API_BASE: '', REFRESH_INTERVAL: 3000 };
         
         const STATE = {
@@ -655,8 +656,8 @@
                     el.innerHTML = rows.map(r => `
                         <div class="flex items-center justify-between p-3 hover:bg-muted/20">
                             <div>
-                                <div class="font-mono text-xs text-primary">${r.type}</div>
-                                <div class="font-mono text-[9px] text-muted-foreground">${r.created_at.substring(0,16)} • ${r.status}</div>
+                                <div class="font-mono text-xs text-primary">${escapeHTML(r.type)}</div>
+                                <div class="font-mono text-[9px] text-muted-foreground">${r.created_at.substring(0,16)} • ${escapeHTML(r.status)}</div>
                             </div>
                             <div class="font-mono text-sm font-bold ${r.amount > 0 ? 'text-neon-green' : 'text-destructive'}">${r.amount > 0 ? '+' : ''}$${Math.abs(r.amount).toFixed(2)}</div>
                         </div>`).join('');
@@ -841,25 +842,26 @@
                         return;
                     }
 
-                    el.innerHTML = store.map(e => {
+                    let html = store.map(e => {
                         const exp = e.expires_in;
                         const min = Math.floor(exp/60), sec = exp%60;
                         const label = exp > 0 ? `${min}m ${sec}s` : 'EXPIRED';
                         return `
-                        <div class="flex items-center justify-between p-3 hover:bg-muted/20 transition-colors cursor-pointer group" onclick="navigator.clipboard.writeText('${e.otp}'); NotificationManager.success('Copied: ${e.otp}')">
+                        <div class="flex items-center justify-between p-3 hover:bg-muted/20 transition-colors cursor-pointer group" onclick="navigator.clipboard.writeText('${escapeHTML(e.otp)}'); NotificationManager.success('Copied: ${escapeHTML(e.otp)}')">
                             <div class="flex items-center gap-3">
                                 <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary"><i class="fa-solid fa-satellite-dish"></i></div>
                                 <div>
-                                    <div class="font-body text-sm font-semibold text-foreground">${e.service || 'Unknown'}</div>
-                                    <div class="font-mono text-[10px] text-muted-foreground">${e.number}</div>
+                                    <div class="font-body text-sm font-semibold text-foreground">${escapeHTML(e.service || 'Unknown')}</div>
+                                    <div class="font-mono text-[10px] text-muted-foreground">${escapeHTML(e.number)}</div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-4">
-                                <div class="font-mono text-lg font-bold text-primary tracking-wider">${e.otp || 'WAIT'}</div>
+                                <div class="font-mono text-lg font-bold text-primary tracking-wider">${escapeHTML(e.otp || 'WAIT')}</div>
                                 <div class="font-mono text-[10px] text-muted-foreground w-12 text-right">${label}</div>
                             </div>
                         </div>`;
                     }).join('');
+                    if (el.innerHTML !== html) el.innerHTML = html;
                 } catch(e) {}
             }
 
@@ -931,10 +933,10 @@
                                     <div class="cyber-card rounded-lg p-3 flex items-center gap-3">
                                         <div class="min-w-0 flex-1">
                                             <div class="flex items-center gap-2">
-                                                <span class="font-display text-[10px] font-bold text-foreground">${i.service || 'SMS'}</span>
-                                                <span class="font-mono text-[9px] text-primary bg-primary/10 px-1.5 py-0.5 rounded">${i.otp}</span>
+                                                <span class="font-display text-[10px] font-bold text-foreground">${escapeHTML(i.service || 'SMS')}</span>
+                                                <span class="font-mono text-[9px] text-primary bg-primary/10 px-1.5 py-0.5 rounded">${escapeHTML(i.otp)}</span>
                                             </div>
-                                            <p class="font-mono text-[9px] text-muted-foreground mt-0.5">🌍 ${i.number} • SOURCE: ${i.source || 'SYS'}</p>
+                                            <p class="font-mono text-[9px] text-muted-foreground mt-0.5">🌍 ${escapeHTML(i.number)} • SOURCE: ${escapeHTML(i.source || 'SYS')}</p>
                                         </div>
                                         <div class="font-mono text-[10px] text-muted-foreground shrink-0">${time}</div>
                                     </div>
@@ -963,10 +965,10 @@
                     el.innerHTML = rows.map(e => `
                         <div class="flex items-center justify-between p-3 hover:bg-muted/20">
                             <div class="flex flex-col">
-                                <span class="font-mono text-xs text-foreground">${e.number}</span>
-                                <span class="font-display text-[9px] text-muted-foreground">${e.service}</span>
+                                <span class="font-mono text-xs text-foreground">${escapeHTML(e.number)}</span>
+                                <span class="font-display text-[9px] text-muted-foreground">${escapeHTML(e.service)}</span>
                             </div>
-                            <div class="font-mono text-sm text-primary font-bold">${e.otp}</div>
+                            <div class="font-mono text-sm text-primary font-bold">${escapeHTML(e.otp)}</div>
                         </div>`).join('');
                 } catch(e) {
                     el.innerHTML = '<div class="p-8 text-center text-destructive font-mono text-xs">Query failed.</div>';

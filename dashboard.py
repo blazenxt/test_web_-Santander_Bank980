@@ -45,7 +45,9 @@ def save_json(path, data):
     with open(path, "w") as f: json.dump(data, f, indent=2)
 
 def get_db():
-    conn = sqlite3.connect(DB_FILE)
+    conn = sqlite3.connect(DB_FILE, timeout=15)
+    conn.execute('PRAGMA journal_mode=WAL;')
+    conn.execute('PRAGMA synchronous=NORMAL;')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -630,6 +632,7 @@ def provision_number():
             phone = row["phone"]
             if not phone.startswith("+"):
                 phone = "+" + phone
+            db.execute("DELETE FROM numbers WHERE id=?", (row["id"],))
         else:
             import random
             phone = f"+{random.randint(10000000000, 99999999999)}"

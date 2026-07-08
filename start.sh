@@ -1,13 +1,19 @@
 #!/bin/bash
 
-# Start the Flask dashboard via Gunicorn in the background
+# Trap SIGTERM to gracefully shut down the child processes (Prevents Telegram Polling Conflict on Railway Deploy)
+trap 'kill $GUNICORN_PID $BOT_PID; exit' SIGTERM SIGINT
+
 echo "Starting Flask Dashboard..."
 gunicorn -b 0.0.0.0:${PORT:-8080} dashboard:app &
+GUNICORN_PID=$!
 
-# Run the Telegram Bot in a while loop so it restarts on crash without killing the container
 echo "Starting Telegram Bot..."
 while true; do
-    python app.py
+    python app.py &
+    BOT_PID=$!
+    wait $BOT_PID
     echo "Bot crashed! Restarting in 5 seconds..."
     sleep 5
-done
+done &
+
+wait $GUNICORN_PID
